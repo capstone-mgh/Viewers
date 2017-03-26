@@ -1,0 +1,1389 @@
+{
+  "studies": [
+    {
+      "patientName": "0b20184e0cd497028bdd155d9fb42dc9",
+      "seriesList": [
+        {
+          "instances": [
+            {
+              "columns": 512,
+              "instanceNumber": 1,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.498978858298909595241564536516",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/46cb27503691c851abd5431e90683aa2.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 2,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.324700249067638374739355226474",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/c351a8fabb39037a516351c570b26374.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 3,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.142036141590956873040160098274",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/0de6047d5ea4b7ea8a7d9fa6303c5da4.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 4,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.120289524710565945735119469491",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/8500fd5fa043460a2bc13114ea5fd383.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 5,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.167025016941396632973794512500",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/9c413619ef2f05be5a4f7cfed282dd49.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 6,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.156152837746871149639871531192",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/a00f432384b0a6c88132e9a5e426b0da.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 7,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.796541579018960150526340100311",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/e1b1ebd552273dbd1ed622e3352f7889.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 8,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.644287938117423866835471527897",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/33408fb6c890222db52a542e318d4dac.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 9,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.314915736862772075214785379358",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/1834c0d45300fc8f03b6cfbd4012d25d.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 10,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.354431529511437728482037685018",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/ee6ccedcf56a2a798459d694827311d1.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 11,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.204752434537897237341878264625",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/39ca01b1b21904955394aa5059fd21ec.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 12,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.721025622958331287163097016247",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/8729e25e1548ea4224297dc2baec737d.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 13,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.879201338632646535251310967752",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/94903001229956c121374da4cc4c698c.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 14,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.312285231694844878415794577199",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/095c348607ad5b94d0e31ac607ae556e.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 15,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.141634959674488215153891588004",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/6b9959c342ad8cc56e42e2e3905424d4.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 16,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.134673582251361577395403885666",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/03423bcd1cbdb59a33ecfdbb67ceeb71.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 17,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.282792213613810502089931056644",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/bb86a2c040698c97475359381b9c8193.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 18,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.341472242706016171598354779497",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/b035545cd5a849a796cff0f6b2ffb323.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 19,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.283843769744663601299619444883",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7f35cd65c8e7c3ce809e24578ade6873.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 20,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.201944965871325991814663021694",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/77c96879ac7b775b858ffd8c3d4798b7.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 21,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.248963667275381725616904560013",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/94cd96cd6bb63fc63ec578a3d6e209da.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 22,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.112004278406843819741458499009",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/1bc53e171cb3b56791972b0bf050deb8.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 23,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.676203454645524763205344239488",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/6551994f4b403c905047fe8f9ee3b91a.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 24,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.392112364326614242758566257270",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/57f21aea00585e40ac95161da38051bc.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 25,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.178197638491331022677352767786",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/9646ddb99a255765812afae20ce9785d.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 26,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.785842180410807488634518733682",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/1c249000728cd2700a78609cdab2cc40.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 27,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.314463978860274832890467993360",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/588d5a9668fe87e7d32cb52b37afc0c1.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 28,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.294339327714204899648014176233",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/c7e5e05c40bb43cec32d439bfefb6c2d.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 29,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.153283460539388509771357359595",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/be4af648fa721c014ecb97e2887212a6.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 30,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.177277033739936130469930775175",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/a039460b207112355475b459c775b614.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 31,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.314959222911923244463040232482",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/3714708578615c6ecfeb00aaa6577590.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 32,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.167712138336657410084761337000",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/20beb373eb460e807ab1dc1b3f20cf53.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 33,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.949889726903981854859423932624",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/b6ec0eabbc3d337a79c49c70daa18178.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 34,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.241839306230085705416527010818",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/be17759ceb3ec6a02838e15fab1d6faa.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 35,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.196192789216883870837959114290",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/e285ee01f56d291c5128fa6fd7b222f8.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 36,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.282565192405558374182417902862",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/e61138ff75e7297dbc0e21c41b523b64.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 37,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.800245443230903607053872791134",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/57d8b1560650013cb8234533573af723.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 38,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.128033540822849206589840579595",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/c04e0f303bfcc2b66df2e0f2eea956e8.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 39,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.128500280048301334328439957577",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/4053554f7cbc20d13d2ea3a06725f0f5.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 40,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.144227291584005252280194781593",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/876a1c7e518346dbb8545952937a2b04.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 41,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.217175471309015278902484319198",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/659625df1e6db1206f9489c56a4325cc.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 42,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.121402330450950009549703387604",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/b46ef01ed2f31393677a8978910e6f4b.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 43,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.186338447695649066533870150769",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/d0dc5ddc7ee2fba3060450bfa8ca127b.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 44,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.287828763837598327635922055925",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/5b4da8f46d12f7c63b147611ecfad7ee.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 45,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.167377073838035656739745484961",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/4e72ce063c6ff9c26dd467b6af0f1a63.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 46,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.323187607405061095885222220868",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/5f4b3cbc271a74acab3b00440b02577f.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 47,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.106153281707101315241240826017",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/14d3dedde088f2cbea6c5aac2818a6c0.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 48,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.195768355464150721076757548093",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/9bbf90636393874ba18432813d615890.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 49,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.797326432991068668833907327274",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/97d7df6227871ecce9cfb36571fd0fd5.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 50,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.168191798228819840652924130307",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/4fcc8903a4a1d45d9475b4185a10dd14.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 51,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.317344169323179499958799419373",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/2518bb75c033e039b0ea949233c21096.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 52,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.110059525104791797580387028115",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/4460d36f9a641f0f3d29dcf004431f86.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 53,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.952573120957190505514515615272",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/5734ba2150caa461354012c0a34029c8.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 54,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.189116196895395671333648322104",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7d7973ec7f687c11b093023742151fa8.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 55,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.547688415359158286447619327406",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/46ffe8e6495eb3042b3b3bbcb6574337.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 56,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.263480268582111577645968210406",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/6bf8572b632079cce0bfdc89a47bf380.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 57,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.433736319387038608568439427430",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/a7b4cc3e8e40f26b9bbdd9c70b313630.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 58,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.240543601573562007117817860692",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/eded2776475a67643a6518fdadb9f6b6.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 59,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.150005616896570459133118245428",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/fb1f4d3a163fcf5044fe1ab032abbf2a.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 60,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.123607010189492196583021400741",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/e0ccb6728ee6e069c63a8c6332659d50.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 61,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.299754917878298281310059902399",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/eb87551d3d799ad6851bee0dd9cacb89.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 62,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.136848927959677828878007526915",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/9f0b828a9a8ba3734eef9773041e6c61.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 63,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.176445085361569502595975393644",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/5bf98b2a3be779e351bf44ba289a0a0b.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 64,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.103961695556081101593986712102",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/79cc40cafd08d6071044b863c169a81b.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 65,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.259548726202066188961179999180",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7eabef38997dc8d8e7fb1af38623ae44.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 66,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.170812795092403060748579992302",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/b95274a1536fb5013ab02a025dbc97b5.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 67,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.522390817905351609620447250187",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/11494e6603530bd7c51a45fbe5ab4474.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 68,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.290826641428720745876422349722",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/8cc62d255e33387a898b37e3ba8e16a2.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 69,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.199555734858953362482271498229",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/4cc2c40c427363039044cd967b930e68.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 70,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.113246256339399684571022995347",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/866d939ed308126788303f1dd7dd32bd.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 71,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.930076396801170338420488926385",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/9f5b840162e5addd8a27985c2fb25cd7.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 72,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.171443629399951051671656281253",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/9b1fbe8752714ea7732a8675fcbcad45.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 73,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.126900948023911286890400615316",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/31771db2d87a0c4b001ab9b43d8db20a.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 74,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.429287575065862048333127241295",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/0bac498d55ba12674b5527fdd6c43d3b.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 75,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.284531538273283024198478190887",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/6e450673b3bdda33063e1850189c9651.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 76,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.406614427287621191376099160219",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7fcc3736234466be1798f893c62f1b6b.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 77,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.177279694350756595393539753547",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/9352323e67c65b12f7625580d94beaa0.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 78,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.706874969731863292694734061375",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7e9cd9f7333493ae99b7f7b32d315b65.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 79,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.290227698348714916393134443608",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/facc7030d4b67fd7001bf9da66fbe8ff.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 80,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.669381891522011281488828486624",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/b976c2aece5f5e94f8adee345533bd1f.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 81,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.779125371507096073678146111950",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/efbe26cbafcc7b872e49ebfb9194e822.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 82,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.239069683073344064755169524961",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/743eb3356564f4ad7b290376aca75395.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 83,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.230557366239797484434610164225",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/bb034863d881d5585010e02f2ac94ddc.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 84,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.137819350994054533765654399974",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/3cdc6d03331a8b44facdf70f9457a1e9.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 85,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.115206056627685108793880817211",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/4e7a6c7b9c81fd5b07e080a3f0005127.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 86,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.124652153280381918391232983612",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/dc2db7c5763333e74732a93ae4458475.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 87,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.824071024427077014390446301193",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/60e28109119ec1b5903f90e948e59d19.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 88,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.281065309166077010830687361245",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/9928c9a619f49bf2ebb2f4c2f13d2878.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 89,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.236556991186469564973330101239",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/109a777914ea87b9728f3d6a3d4a12bb.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 90,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.378860695055744456574816792231",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/ee9315573fbc82682e010e91ff9d39e5.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 91,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.232919737110101896096878273972",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/3bc71a3dff0bbe372583714a5980c2bf.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 92,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.336061929597477440305582326185",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/3bac6ee6e6748bd7cf264f57b5230047.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 93,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.303853061491354383152890504291",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/28334fa602a1d3e2010915f9027d4901.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 94,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.218241741213311356383601249310",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/e21fbac23ea3a24f71780b5b80f15bbd.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 95,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.143503851925100955534904925991",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/d745d9d872ed03fabe199f9572ef75c6.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 96,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.275773966230877296817740130585",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/726f752d2d006d7cf1bea139e6ca7271.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 97,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.244845697776516169412962083748",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/4e5e471ac59632ae46a9b57b5fdec4e6.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 98,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.298543799951766841315143069321",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/731681df79acc8a747a6464723e62d38.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 99,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.151172331789681893692018863995",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/2bf6437f2ad8d7def996843e02f872fc.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 100,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.180018165588421840794272289483",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/de32fab4376b7c174452bcc2fc737c15.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 101,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.308321552292319899375085128159",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/2d130619852993453b97f2c89bcdd49f.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 102,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.203200853850641709110946610205",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/c81ff225d26fade1db3e5a3bd1c0ca94.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 103,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.103105240900233855220935257642",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/9982256234649ff2eaad47ce6983ee50.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 104,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.103728061429175964305152626465",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/5998c867794f11da105cb2a4dc0d4cc0.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 105,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.213675949176959668313296111287",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/a891558f287f3006e108cb712d3d60c6.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 106,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.222290908184188752107650448687",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/1e436db99791ac843944e1f10a318ee0.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 107,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.207817167090029083708397417904",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/cdd9a1e2dbc1af8a77c43e3cd6076690.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 108,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.339938559327112535656063481275",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/62780ca06c1a6049777d6e04ed48a14a.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 109,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.312834576489875609776104100185",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/01495b9965c7ff4147587b129408221f.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 110,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.184526397228567398423416688530",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7e701dc868bb20b6aeb8a80c43ddd4c8.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 111,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.175082493655662962849794084417",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/86b633da35897dee9d4f9aff68d832be.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 112,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.262617000606324324510475273896",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/abdb6bda2da490eae54ddc9e64028034.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 113,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.149119546224884564580619225506",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/6a17336d776e7233650808f124591b14.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 114,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.157760765212239752667135243013",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/3d84e95312a823d00294872a9bd5ee6c.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 115,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.233201755561678628486666527175",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/499e4eea4c2af97ebeed208df74c7c7a.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 116,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.123869883396172783903328580894",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/894d17ce003c4b0b33f9aabcee20474f.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 117,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.338490223198820099579048753521",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/9825675c75ff15ffa970ec02468beb4d.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 118,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.221570243549637524782235143741",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/975d7bc5b51c57cbc0fc3711aaac78ac.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 119,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.919209615338525663822744411960",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/e82c8c6ff28ec35a405706751745c7e2.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 120,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.384281127256197955561981588698",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/107019d7c8fac0ee76162daf513be51c.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 121,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.603309724791589843626566251988",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/f2f58ba15a6125ac277b061a5efb0321.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 122,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.373376144714265312510699136977",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7d3007acccd7591d13f8148b59d2f4dd.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 123,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.577459431347414111504395029692",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/3e11657a5cf876b29fcd865ae30375d0.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 124,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.730942449648757714587224198275",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/05d1ebcca2bd31fe9034422cd661f7c9.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 125,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.291625680842149189217156676763",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/fbc9c949841b9119a8ada3fce95d95d0.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 126,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.308446981112264554457673841890",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/ee64c57c9377b29f0f7a519e97c6e574.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 127,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.233571629450835833174600550310",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7392700642aa87c0f8dbc4be750f5639.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 128,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.694282217005156887212881949108",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/ec993ccbfbe26c74847f27be89691e94.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 129,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.854101963910256840617826481223",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/0011a95eb8cf73aee3e44170a2459393.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 130,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.178696252047601763610159894002",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/ad8c25ca7db13491c799bcadc93c17cd.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 131,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.227847361205348830575141354125",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/6588e136eb71ff056eb3aa8d9685a766.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 132,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.309119677900501295232022848638",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/85ad3841927dd8dc48296a430039de5a.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 133,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.235990449321094881245038524607",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/89265ed1ce7751f755f252cab2401cfe.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 134,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.176268458681980946908683678133",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/72e96c2037c2a07dd1f5384f61e8a5b2.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 135,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.211793664430928504347183612256",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/f8437546d4682689346373101b1397c0.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 136,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.318775744383416667223402470451",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/ddb7f1e516dfd493b24597ff3754166e.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 137,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.109333659536356354700063661431",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/e50b7fe4c328bda346d3a9b37cd78f55.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 138,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.550580242517408330763375565182",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/8607c8600eb67857be67c9040ed2e8b7.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 139,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.674499501107878284758948686912",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/d4c094bc698bf3e2855e4b15d587f9e9.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 140,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.317494914968998472944364819032",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/0cb0c9a929ffa04ee1a52a55c2d81a27.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 141,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.263408767958359493974326230189",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/910db2de975d33db65b7ea029d888d73.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 142,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.280607510762244854069420949215",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/55fed29547424bb1e2ff18872498a30e.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 143,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.316891106408841623725809767778",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/b8fc035263ddf4f369595e71d2541e3b.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 144,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.326501197126797561297418516546",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/d1df4cd3e6abd44c6c5a8407d8c68be0.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 145,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.224910360752133610996442509952",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/006fa39deb7fcdcb0a8e86f62a7dfaae.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 146,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.202048897113142423404418647805",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/fd89093a0c9081f538206d7cc9938cb1.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 147,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.313062076444169094050215273352",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/6b3da983f7ff22691d277fd1fbb357d8.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 148,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.324772028538855377529561667822",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/5d800f1aef7d3d9a290b8ba667a634a9.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 149,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.137344069834845722387735662628",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/54d12ebee213d8b1b5798764dfe718b4.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 150,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.102494230970431577777475013448",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/51b84eec692bd47afcef4ca820da7e7c.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 151,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.327667443259836792291255275836",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7006d02fd0f888e86748eb3dc43c797f.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 152,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.289267551037393059350353409878",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/0b06a4b9e1590a1f4aad74d2bcb30530.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 153,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.127816636637724995107303050838",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/b3ac77986a008d15abaad0b9cef6f709.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 154,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.160454738160369509620616441613",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/521d57513dfdb68f1d49779278bc7387.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 155,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.157105579037953469239083839978",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7aac20573642f16495aa385373e969aa.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 156,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.598769304873000929939205298139",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/5f21b96388d396e4ff61686ee3fec244.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 157,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.946790397662988356208400895572",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/9d53c685ed718b73eb9c3a111bb91acd.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 158,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.120721084255159978011898328510",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/a2dd901ad80bd08cb53f47bdba2a4f4c.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 159,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.298913606237065677255705910174",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/791927bbac8f8fa5018dd27f2288bbb2.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 160,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.865177122333831294096567817718",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/5f3a0c199943b7baab2a8823684de33f.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 161,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.271516541389416210797858730742",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/1918cb0a09438b5cd6bb35c4cb5b516e.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 162,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.156192870610632388756746582055",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/e9488909f8e2df0f2d5a67d2eb95bc88.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 163,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.138955727626493450244853168282",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/cbef438820baff0664ecf0cfeb97d08e.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 164,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.212811018946405284892879919691",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/969b9fca32c723ecdf63e6f6a608b397.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 165,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.514550076561742923364118098733",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7145e646f307f3860b60699201129587.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 166,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.288027891271365856470564252229",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/9f6dc4329c8565359ab11217708dfce9.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 167,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.864449030347465358198158102533",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/f6b5c6607a1802845852b083dccb2779.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 168,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.205020819071496395770408977810",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/80becca13623d1b5ea73afd3bbfdbb75.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 169,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.322537522305149415256517783707",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/0e1dde0d241da2d217323b580f869a38.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 170,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.108238109157539598452562921202",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/aeec5861059e9e2ac5727106642b99bb.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 171,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.262669303418688123962888947251",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/6a6dbd409d9cdb36899341b5238894e1.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 172,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.177128414935783033725066036753",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/43e802127bc4183dbde18b069016e2c2.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 173,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.209857484777892143846894922692",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/bbc1c8414fd4735a5548e57eb162327d.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 174,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.252641524228902338847578419690",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/982e7409dfbffce8b9ae755d1699b1a9.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 175,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.209831221651067055749095366534",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/258f3a77503de61396ce75f9c4a32baf.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 176,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.198984573026671601659234192106",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7c90366f4af06db0824cbdd09c8e5984.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 177,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.307705082701331256750425255045",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/b93e165d6487fc7e4eaa2c208521647e.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 178,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.567431287085611843277964248563",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/4dfd9348dd55b7623fc673835c5f4c6b.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 179,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.333358747332843477195973466600",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/a92f03373b00f65fa5a93f2618841b77.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 180,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.328288685332505112721153466093",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/cea427e6a88fc0eea0b3ee4de4300489.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 181,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.146916169444460391447129998859",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/1f325cec950f6054694b1b32961a7afc.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 182,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.103801563803690566223655706927",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/76552d10d22e8c470ce1d689ab0d2fde.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 183,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.236358161507423138236030499616",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/1384e8433dec76633ef5a500b772b77d.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 184,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.182767428374177325084897722890",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/a5dad199f2dd92d417d6f04f1af1b596.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 185,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.239107645557493286348960686334",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/ebcb412813f0c18ef01f9706366f89e6.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 186,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.308298726931047840313598578475",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/d66277297a830f713813fe8f5d7400c5.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 187,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.185839042831049233652896765142",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/7c3df8cbdd37e42ca9a313cdbaf600e4.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 188,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.232061668283828168662161991581",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/fde6c953b4286ab2b6c23b6a9d8cea5f.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 189,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.296924986291547492914207358757",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/96b181786b6bbe916088af5c8a7183b1.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 190,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.515777032003219424299191099081",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/3308f57251dae69093ef17b392e871d7.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 191,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.219249741855144601431608047163",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/05129cb80b2ff05326d8058787b07e29.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 192,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.234750288891308120739193961328",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/651459dad26a70698cc78192f239cbfb.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 193,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.140976578285516769891414896238",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/046acff9307ee1039c4607b9112797fe.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 194,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.312719092861464014731935925334",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/712abbf7b99c586fb2e16b12449a1d70.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 195,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.158553245254796299910655855197",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/bc411532b16f46e819bf10be76717226.dcm"
+            },
+            {
+              "columns": 512,
+              "instanceNumber": 196,
+              "rows": 512,
+              "sopInstanceUid": "1.3.6.1.4.1.14519.5.2.1.7009.9004.178760606483405688466895537853",
+              "url": "dicomweb://localhost:3000/0b20184e0cd497028bdd155d9fb42dc9/d15e23a32d42f053a1529364679b4b58.dcm"
+            }
+          ],
+          "seriesDescription": "Axial",
+          "seriesInstanceUid": "2.25.30788716658081497459531139694673322712892260060074425235891"
+        }
+      ],
+      "studyInstanceUid": "2.25.12959879976443571621843145901999710656652277064659217139009"
+    }
+  ],
+  "transactionId": "kaggleData"
+}
