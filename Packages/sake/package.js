@@ -21,9 +21,9 @@ Package.onUse(function(api) {
     // Our custom packages
     api.use('ohif:design');
     api.use('ohif:core');
-    api.use('ohif:study-list');
+    //api.use('ohif:study-list');
     api.use('ohif:cornerstone');
-    api.use('ohif:measurements');
+    //api.use('ohif:measurements');
 
     //api.addFiles('both/index.js', [ 'client', 'server' ]);
 

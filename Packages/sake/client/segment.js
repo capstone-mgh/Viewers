@@ -8,19 +8,18 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
     var toolType = 'sake';
 
     ///////// BEGIN ACTIVE TOOL ///////
-    // function mouseDownCallback(e, eventData) {
-    //     console.log("MouseDown");
-    //     var measurementData = {
-    //         x: eventData.currentPoints.image.x,
-    //         y: eventData.currentPoints.image.y
-    //     };
+    function addNewMeasurement(mouseEventData) {
+        var element = mouseEventData.element;
 
-    //     console.log(measurementData);
+        var measurementData = createNewMeasurement(mouseEventData);
+        if (!measurementData) {
+            return;
+        }
 
-    //     return measurementData;
-    // }
-
-
+        // associate this data with this imageId so we can render it and manipulate it
+        cornerstoneTools.addToolState(mouseEventData.element, toolType, measurementData);
+        cornerstone.updateImage(element);
+    }
 
     function createNewMeasurement(mouseEventData) {
         //create the measurement data for this tool with the end handle activated
@@ -33,39 +32,34 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                     y: mouseEventData.currentPoints.image.y,
                     highlight: true,
                     active: false
-                },
-                end: {
-                    x: mouseEventData.currentPoints.image.x,
-                    y: mouseEventData.currentPoints.image.y,
-                    highlight: true,
-                    active: true
-                },
-                textBox: {
-                    active: false,
-                    hasMoved: false,
-                    movesIndependently: false,
-                    drawnIndependently: true,
-                    allowedOutsideImage: true,
-                    hasBoundingBox: true
                 }
             }
         };
 
-        console.log("Create New Measurement");
+        //get segmentation
+        var url = "http://sakeviewer.com/api/v1/test/" + Math.round(mouseEventData.currentPoints.image.x) + "/" + Math.round(mouseEventData.currentPoints.image.y);
 
-        console.log(mouseEventData.currentPoints.image.x);
-        console.log(mouseEventData.currentPoints.image.y);
+        console.log("Getting segmentation from " + url);
+
+        $.ajax({
+          url: url,
+          success: function(data) {
+            console.log("ajax request returned following");
+            console.log(data);
+          }
+        });
 
         return measurementData;
     }
+
     ///////// END ACTIVE TOOL ///////
 
     function pointNearTool(element, data, coords) {
-        var lineSegment = {
-            start: cornerstone.pixelToCanvas(element, data.handles.start),
-            end: cornerstone.pixelToCanvas(element, data.handles.end)
-        };
-        var distanceToPoint = cornerstoneMath.lineSegment.distanceToPoint(lineSegment, coords);
+        // var lineSegment = {
+        //     start: cornerstone.pixelToCanvas(element, data.handles.start),
+        //     end: cornerstone.pixelToCanvas(element, data.handles.end)
+        // };
+        var distanceToPoint = cornerstoneMath.point.distance(data.handles.start, coords);
         return (distanceToPoint < 25);
     }
 
@@ -84,15 +78,13 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
         context.setTransform(1, 0, 0, 1, 0, 0);
 
-        var lineWidth = cornerstoneTools.toolStyle.getToolWidth();
-        var config = cornerstoneTools.length.getConfiguration();
-
         for (var i = 0; i < toolData.data.length; i++) {
             context.save();
 
             var data = toolData.data[i];
             var color = cornerstoneTools.toolColors.getColorIfActive(data.active);
             var canvasPoint = cornerstone.pixelToCanvas(eventData.element, data.handles.start);
+            // var canvasPoint = cornerstone.pixelToCanvas(eventData.element, data);
 
             context.fillStyle = color;
             context.beginPath();
@@ -105,9 +97,12 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
     }
     ///////// END IMAGE RENDERING ///////
 
+    //cornerstoneTools.sake = cornerstoneTools.simpleMouseButtonTool(mouseDownCallback)
+
     // module exports
     cornerstoneTools.sake = cornerstoneTools.mouseButtonTool({
         //mouseDownCallback: mouseDownCallback,
+        addNewMeasurement: addNewMeasurement,
         createNewMeasurement: createNewMeasurement,
         onImageRendered: onImageRendered,
         pointNearTool: pointNearTool,
@@ -116,6 +111,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
     cornerstoneTools.sakeTouch = cornerstoneTools.touchTool({
         //mouseDownCallback: mouseDownCallback,
+        addNewMeasurement: addNewMeasurement,
         createNewMeasurement: createNewMeasurement,
         onImageRendered: onImageRendered,
         pointNearTool: pointNearTool,
