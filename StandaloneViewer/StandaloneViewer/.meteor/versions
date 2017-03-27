@@ -79,6 +79,7 @@ ohif:dicom-services@0.0.1
 ohif:hanging-protocols@0.0.1
 ohif:header@0.0.1
 ohif:log@0.0.1
+ohif:measurements@0.0.1
 ohif:metadata@0.0.1
 ohif:study-list@0.0.1
 ohif:themes@0.0.1
@@ -98,6 +99,7 @@ reactive-var@1.0.11
 reload@1.1.11
 retry@1.0.9
 routepolicy@1.0.12
+sake@0.0.1
 service-configuration@1.0.11
 session@1.1.7
 shell-server@0.2.1

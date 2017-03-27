@@ -29,6 +29,8 @@ ohif:study-list
 ohif:dicom-services
 ohif:hanging-protocols
 # ohif:user-management
+# Hard coded for now, can be added with "meteor add"
+sake
 
 aldeed:template-extension
 aldeed:simple-schema@1.5.3

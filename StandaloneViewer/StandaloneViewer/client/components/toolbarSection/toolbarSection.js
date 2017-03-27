@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { OHIF } from 'meteor/ohif:core';
 import 'meteor/ohif:viewerbase';
+import 'meteor/sake';
 
 Template.toolbarSection.onCreated(() => {
     const instance = Template.instance();
@@ -128,6 +129,13 @@ Template.toolbarSection.helpers({
             title: 'Angle',
             classes: 'imageViewerTool',
             iconClasses: 'fa fa-angle-left'
+        });
+
+        buttonData.push({
+            id: 'sake',
+            title: 'Segment',
+            classes: 'imageViewerTool toolbarSectionButton',
+            svgLink: 'packages/ohif_viewerbase/assets/icons.svg#icon-tools-measure-temp'
         });
 
         buttonData.push({
