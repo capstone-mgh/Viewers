@@ -38,23 +38,25 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         };
 
         //get segmentation
-        var url = "http://sakeviewer.com/api/v1/test/" + Math.round(x) + "/" + Math.round(y);
+        var url = "http://104.198.43.42/sake/segment"
 
         console.log("Getting segmentation from " + url);
         console.log("Image id " + cornerstone.getEnabledElement(mouseEventData.element).image.imageId);
 
         $.ajax({
-          url: url
+          url: url,
+          data: {
+            x: Math.round(x),
+            y: Math.round(y)
+          }
         }).done(function(data) {
             console.log("ajax get request returned");
             console.log(data);
-            measurementData.segmentation = data;
+            console.log(typeof data);
+            measurementData.segmentation = JSON.parse(data);
             cornerstone.updateImage(mouseEventData.element);
         }).fail(function() {
-            console.log("ajax get request failed, drawing dummy segmentation");
-            //dummy response
-            measurementData.segmentation = [[x, y-7], [x+3, y-3], [x+4, y], [x+3, y+7], [x, y+7], [x-3, y+3], [x-4, y], [x-3, y-7]];
-            cornerstone.updateImage(mouseEventData.element);
+            console.log("ajax get request failed");
         });
 
         return measurementData;
