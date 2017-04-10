@@ -38,21 +38,32 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         };
 
         //get segmentation
-        var url = "http://104.198.43.42/sake/segment"
+        var url = "http://104.198.43.42/sake/segment";
+        var stackData = cornerstoneTools.getToolState(mouseEventData.element, 'stack');
+        if (!stackData || !stackData.data || !stackData.data.length) {
+            console.log("no stack data available");
+            return;
+        }
+        var imageIds = stackData.data[0].imageIds;
+        var currentImageIdIndex = stackData.data[0].currentImageIdIndex;
+        var currentImageId = imageIds[currentImageIdIndex];
+        var imageMetadata = OHIF.viewer.metadataProvider.getMetadata(currentImageId);
 
         console.log("Getting segmentation from " + url);
-        console.log("Image id " + cornerstone.getEnabledElement(mouseEventData.element).image.imageId);
+        console.log("Image id: " + currentImageId);
+        console.log(imageMetadata);
 
         $.ajax({
           url: url,
           data: {
             x: Math.round(x),
-            y: Math.round(y)
+            y: Math.round(y),
+            z: currentImageIdIndex,
+            imageId: currentImageId
           }
         }).done(function(data) {
             console.log("ajax get request returned");
             console.log(data);
-            console.log(typeof data);
             measurementData.segmentation = JSON.parse(data);
             cornerstone.updateImage(mouseEventData.element);
         }).fail(function() {
