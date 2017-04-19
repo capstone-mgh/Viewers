@@ -9573,14 +9573,17 @@ Display scroll progress bar across bottom of image.
 
         // here we add tool state, this is done by tools as well
         // as modules that restore saved state
-        function addImageIdSpecificToolState(element, toolType, data) {
+        function addImageIdSpecificToolState(element, toolType, data, imageId) {
             var enabledImage = cornerstone.getEnabledElement(element);
+            if (typeof(imageId) === 'undefined') {
+                imageId = enabledImage.image.imageId;
+            }
             // if we don't have any tool state for this imageId, add an empty object
-            if (!enabledImage.image || toolState.hasOwnProperty(enabledImage.image.imageId) === false) {
-                toolState[enabledImage.image.imageId] = {};
+            if (toolState.hasOwnProperty(imageId) === false) {
+                toolState[imageId] = {};
             }
 
-            var imageIdToolState = toolState[enabledImage.image.imageId];
+            var imageIdToolState = toolState[imageId];
 
             // if we don't have tool state for this type of tool, add an empty object
             if (imageIdToolState.hasOwnProperty(toolType) === false) {
@@ -9723,7 +9726,7 @@ Display scroll progress bar across bottom of image.
 
         // here we add tool state, this is done by tools as well
         // as modules that restore saved state
-        function addStackSpecificToolState(element, toolType, data) {
+        function addStackSpecificToolState(element, toolType, data, imageId) {
             // if this is a tool type to apply to the stack, do so
             if (toolTypes.indexOf(toolType) >= 0) {
 
@@ -9740,7 +9743,7 @@ Display scroll progress bar across bottom of image.
                 toolData.data.push(data);
             } else {
                 // call the imageId specific tool state manager
-                return oldStateManager.add(element, toolType, data);
+                return oldStateManager.add(element, toolType, data, imageId);
             }
         }
 
@@ -10038,9 +10041,9 @@ Display scroll progress bar across bottom of image.
 
     // here we add tool state, this is done by tools as well
     // as modules that restore saved state
-    function addToolState(element, toolType, data) {
+    function addToolState(element, toolType, data, imageId) {
         var toolStateManager = getElementToolStateManager(element);
-        toolStateManager.add(element, toolType, data);
+        toolStateManager.add(element, toolType, data, imageId);
 
         var eventType = 'CornerstoneToolsMeasurementAdded';
         var eventData = {
