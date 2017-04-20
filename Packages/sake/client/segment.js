@@ -26,37 +26,59 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             console.log('ajax get request failed');
             console.log('drawing dummy data!');
             var x = measurementData.requestData.x,
-                y = measurementData.requestData.y;
-            measurementData.segmentation = {
-                mask: [
-                    [1, 0, 0 ,0 ,1],
-                    [0, 1, 0 ,1 ,0],
-                    [0, 0, 1 ,0 ,0],
-                    [0, 1, 0 ,1 ,0],
-                    [1, 0, 0 ,0 ,1],
-                ],
-                maskOffset: [x - 2, y - 2],
-                polygon: [[x, y-7], [x+3, y-3], [x+4, y], [x+3, y+7], [x, y+7], [x-3, y+3], [x-4, y], [x-3, y-7]]
-            };
+                y = measurementData.requestData.y,
+                z = measurementData.requestData.z;
+            if (z % 7 === 3) {
+                measurementData.segmentation = {};
+            } else {
+                measurementData.segmentation = {
+                    mask: [
+                        [1, 0, 0 ,0 ,1],
+                        [0, 1, 0 ,1 ,0],
+                        [0, 0, 1 ,0 ,0],
+                        [0, 1, 0 ,1 ,0],
+                        [1, 0, 0 ,0 ,1],
+                    ],
+                    maskOffset: [x - 2, y - 2],
+                    polygon: [[x, y-7], [x+3, y-3], [x+4, y], [x+3, y+7], [x, y+7], [x-3, y+3], [x-4, y], [x-3, y-7]]
+                };
+            }
         }).always(function() {
+            var polygon = measurementData.segmentation.polygon;
+            if (polygon && polygon.length) {
+                var xCenter = 0,
+                    yCenter = 0,
+                    z = measurementData.requestData.z,
+                    xOrig = measurementData.requestData.xOrig,
+                    yOrig = measurementData.requestData.yOrig,
+                    zOrig = measurementData.requestData.zOrig,
+                    propagationDirection = Math.sign(z - zOrig);
+                //compute center
+                for (var i = 0; i < polygon.length; i++) {
+                    xCenter += polygon[i][0];
+                    yCenter += polygon[i][1];
+                }
+                xCenter = Math.round(xCenter / polygon.length);
+                yCenter = Math.round(yCenter / polygon.length);
+                //propagate to next slice
+                if (propagationDirection >= 0) {
+                    createNewMeasurementInternal(element, xCenter, yCenter, z + 1, xOrig, yOrig, zOrig);
+                }
+                if (propagationDirection <= 0) {
+                    createNewMeasurementInternal(element, xCenter, yCenter, z - 1, xOrig, yOrig, zOrig);
+                }
+            }
             measurementData.segmentationPending = false;
             cornerstone.updateImage(element);
         });
     }
 
-    function createNewMeasurementInternal(element, x, y, zOffset) {
-        var stackData = cornerstoneTools.getToolState(element, 'stack');
-        if (!stackData || !stackData.data || !stackData.data.length) {
-            console.log('no stack data available');
-            return;
+    function createNewMeasurementInternal(element, x, y, z, xOrig, yOrig, zOrig) {
+        var imageIds = cornerstoneTools.getToolState(element, 'stack').data[0].imageIds;
+        if (z < 0 || z >= imageIds.length) {
+            return; //out of stack range
         }
-        var imageIds = stackData.data[0].imageIds;
-        var currentImageIdIndex = stackData.data[0].currentImageIdIndex + zOffset;
-        if (currentImageIdIndex < 0 || currentImageIdIndex >= imageIds.length) {
-            return; //out of range
-        }
-
-        var currentImageId = imageIds[currentImageIdIndex];
+        var currentImageId = imageIds[z];
         //TODO handle missing metadata?
         var imageMetadata = OHIF.viewer.metadataProvider.getMetadata(currentImageId);
         var viewport = cornerstone.getViewport(element);
@@ -72,11 +94,13 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                     active: false
                 }
             },
-            propagationDirection: Math.sign(zOffset),
             requestData: {
-                x: Math.round(x),
-                y: Math.round(y),
-                z: currentImageIdIndex,
+                x: x,
+                y: y,
+                z: z,
+                xOrig: xOrig,
+                yOrig: yOrig,
+                zOrig: zOrig,
                 patientName: imageMetadata.patient.name,
                 windowWidth: viewport.voi.windowWidth,
                 windowCenter: viewport.voi.windowCenter,
@@ -102,10 +126,17 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
     function createNewMeasurement(mouseEventData) {
         //create the measurement data for this tool with the end handle activated
-        var x = mouseEventData.currentPoints.image.x;
-        var y = mouseEventData.currentPoints.image.y;
+        var x = Math.round(mouseEventData.currentPoints.image.x);
+        var y = Math.round(mouseEventData.currentPoints.image.y);
 
-        return createNewMeasurementInternal(mouseEventData.element, x, y, 0);
+        var stackData = cornerstoneTools.getToolState(mouseEventData.element, 'stack');
+        if (!stackData || !stackData.data || !stackData.data.length) {
+            console.log('no stack data available');
+            return;
+        }
+        var z = stackData.data[0].currentImageIdIndex;
+
+        return createNewMeasurementInternal(mouseEventData.element, x, y, z, x, y, z);
     }
     ///////// END ACTIVE TOOL ///////
 
