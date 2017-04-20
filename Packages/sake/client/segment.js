@@ -7,77 +7,26 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
     var toolType = 'sake';
 
-    ///////// BEGIN ACTIVE TOOL ///////
-    function addNewMeasurement(mouseEventData) {
-        var measurementData = createNewMeasurement(mouseEventData);
-        if (!measurementData) {
-            return;
-        }
+    function getSegmentation(element, measurementData) {
+        //TODO remove hard coded url
+        var url = 'http://104.198.43.42/sake/segment';
+        measurementData.segmentationPending = true;
 
-        // associate this data with this imageId so we can render it and manipulate it
-        cornerstoneTools.addToolState(mouseEventData.element, toolType, measurementData);
-        cornerstone.updateImage(mouseEventData.element);
-    }
-
-    function createNewMeasurement(mouseEventData) {
-        //create the measurement data for this tool with the end handle activated
-        var x = mouseEventData.currentPoints.image.x;
-        var y = mouseEventData.currentPoints.image.y;
-
-        var measurementData = {
-            visible: false,
-            active: true,
-            handles: {
-                start: {
-                    x: x,
-                    y: y,
-                    highlight: true,
-                    active: false
-                }
-            }
-        };
-
-        //get segmentation
-        var url = "http://104.198.43.42/sake/segment";
-        var stackData = cornerstoneTools.getToolState(mouseEventData.element, 'stack');
-        if (!stackData || !stackData.data || !stackData.data.length) {
-            console.log("no stack data available");
-            return;
-        }
-        var imageIds = stackData.data[0].imageIds;
-        var currentImageIdIndex = stackData.data[0].currentImageIdIndex;
-        var currentImageId = imageIds[currentImageIdIndex];
-        var imageMetadata = OHIF.viewer.metadataProvider.getMetadata(currentImageId);
-
-        console.log("Getting segmentation from " + url);
-        console.log("Image Metadata")
-        console.log(imageMetadata);
-
-        //TODO handle missing metadata?
-        var requestData = {
-            x: Math.round(x),
-            y: Math.round(y),
-            z: currentImageIdIndex,
-            patientName: imageMetadata.patient.name,
-            seriesInstanceUid: imageMetadata.series.seriesInstanceUid,
-            sopInstanceUid: imageMetadata.instance.sopInstanceUid,
-            imageId: currentImageId
-        };
-        console.log("GET request parameters")
-        console.log(requestData)
-
+        console.log('GET request parameters');
+        console.log(measurementData.requestData);
 
         $.ajax({
           url: url,
-          data: requestData
+          data: measurementData.requestData
         }).done(function(data) {
-            console.log("ajax get request returned");
+            console.log('ajax get request returned');
             console.log(data);
             measurementData.segmentation = JSON.parse(data);
-            cornerstone.updateImage(mouseEventData.element);
         }).fail(function() {
-            console.log("ajax get request failed");
-            console.log("dummy data!");
+            console.log('ajax get request failed');
+            console.log('drawing dummy data!');
+            var x = measurementData.requestData.x,
+                y = measurementData.requestData.y;
             measurementData.segmentation = {
                 mask: [
                     [1, 0, 0 ,0 ,1],
@@ -89,12 +38,75 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 maskOffset: [x - 2, y - 2],
                 polygon: [[x, y-7], [x+3, y-3], [x+4, y], [x+3, y+7], [x, y+7], [x-3, y+3], [x-4, y], [x-3, y-7]]
             };
-            cornerstone.updateImage(mouseEventData.element);
+        }).always(function() {
+            measurementData.segmentationPending = false;
+            cornerstone.updateImage(element);
         });
+    }
 
+    function createNewMeasurementInternal(element, x, y, zOffset) {
+        var stackData = cornerstoneTools.getToolState(element, 'stack');
+        if (!stackData || !stackData.data || !stackData.data.length) {
+            console.log('no stack data available');
+            return;
+        }
+        var imageIds = stackData.data[0].imageIds;
+        var currentImageIdIndex = stackData.data[0].currentImageIdIndex + zOffset;
+        if (currentImageIdIndex < 0 || currentImageIdIndex >= imageIds.length) {
+            return; //out of range
+        }
+
+        var currentImageId = imageIds[currentImageIdIndex];
+        //TODO handle missing metadata?
+        var imageMetadata = OHIF.viewer.metadataProvider.getMetadata(currentImageId);
+        var viewport = cornerstone.getViewport(element);
+
+        var measurementData = {
+            visible: false,
+            active: true,
+            handles: {
+                start: {
+                    x: x,
+                    y: y,
+                    highlight: true,
+                    active: false
+                }
+            },
+            propagationDirection: Math.sign(zOffset),
+            requestData: {
+                x: Math.round(x),
+                y: Math.round(y),
+                z: currentImageIdIndex,
+                patientName: imageMetadata.patient.name,
+                windowWidth: viewport.voi.windowWidth,
+                windowCenter: viewport.voi.windowCenter,
+                seriesInstanceUid: imageMetadata.series.seriesInstanceUid,
+                sopInstanceUid: imageMetadata.instance.sopInstanceUid
+            }
+        };
+
+        // associate this data with this imageId so we can render it and manipulate it
+        cornerstoneTools.addToolState(element, toolType, measurementData, currentImageId);
         return measurementData;
     }
 
+    ///////// BEGIN ACTIVE TOOL ///////
+    function addNewMeasurement(mouseEventData) {
+        var measurementData = createNewMeasurement(mouseEventData);
+        if (!measurementData) {
+            return;
+        }
+
+        cornerstone.updateImage(mouseEventData.element);
+    }
+
+    function createNewMeasurement(mouseEventData) {
+        //create the measurement data for this tool with the end handle activated
+        var x = mouseEventData.currentPoints.image.x;
+        var y = mouseEventData.currentPoints.image.y;
+
+        return createNewMeasurementInternal(mouseEventData.element, x, y, 0);
+    }
     ///////// END ACTIVE TOOL ///////
 
     function pointNearTool(element, data, coords) {
@@ -106,8 +118,6 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
     function onImageRendered(e, eventData) {
 
         // if we have no toolData for this element, return immediately as there is nothing to do
-        // console.log("current target");
-        // console.log(e.currentTarget);
         var toolData = cornerstoneTools.getToolState(e.currentTarget, toolType);
         if (!toolData) {
             return;
@@ -142,7 +152,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                     return cornerstone.pixelToCanvas(eventData.element, {x: pair[0], y: pair[1]});
                 }
                 if (data.segmentation.polygon) {
-                    console.log("Drawing polygon");
+                    console.log('Drawing polygon');
                     //draw polygon
                     context.beginPath();
                     var point = pixelPairToCanvas(data.segmentation.polygon[data.segmentation.polygon.length - 1]);
@@ -153,16 +163,14 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                     }
                     context.stroke();
                 }
-                console.log(data.segmentation.mask);
-                console.log(data.segmentation.maskOffset);
                 if (data.segmentation.mask && data.segmentation.maskOffset) {
-                    console.log("Drawing mask");
+                    console.log('Drawing mask');
                     //draw mask
                     var xOffset = data.segmentation.maskOffset[0];
                     var yOffset = data.segmentation.maskOffset[1];
 
                     context.save();
-                    context.fillStyle = "#FF0000";
+                    context.fillStyle = '#FF0000';
 
                     for (var xMask = 0; xMask < data.segmentation.mask.length; xMask++) {
                         for (var yMask = 0; yMask < data.segmentation.mask[0].length; yMask++) {
@@ -177,6 +185,9 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                     context.restore();
 
                 }
+            } else if (!data.segmentationPending) {
+                //make rest call to get segmentation
+                getSegmentation(eventData.element, data);
             }
 
             context.restore();
