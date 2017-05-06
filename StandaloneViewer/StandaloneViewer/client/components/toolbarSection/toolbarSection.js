@@ -135,7 +135,7 @@ Template.toolbarSection.helpers({
             id: 'sake',
             title: 'Segment',
             classes: 'imageViewerTool toolbarSectionButton',
-            svgLink: 'packages/ohif_viewerbase/assets/icons.svg#icon-tools-measure-temp'
+            svgLink: 'packages/sake/assets/sakelogo.svg#icon-tools-segment'
         });
 
         buttonData.push({
