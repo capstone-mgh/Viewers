@@ -9,6 +9,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
     //select segmentation source
     //var getSegmentation = getSegmentationBackend;
     var getSegmentation = getSegmentationFrontend;
+    var drawMask = false;
 
     //get segmentation from backend
     function getSegmentationBackend(element, measurementData) {
@@ -360,8 +361,10 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             var color = cornerstoneTools.toolColors.getColorIfActive(data.active);
             var canvasPoint = cornerstone.pixelToCanvas(eventData.element, data.handles.start);
 
-            context.fillStyle = color;
             context.strokeStyle = color;
+            context.fillStyle = color;
+
+            //draw selected point
             context.beginPath();
             //(x, y, radiusX, radiusY, rotation, startAngle, endAngle, [anticlockwise]);
             context.ellipse(canvasPoint.x, canvasPoint.y, 2, 2, 0, 0, 2 * Math.PI)
@@ -375,24 +378,34 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             if (data.segmentation) {
                 if (data.segmentation.polygon) {
                     console.log('Drawing polygon');
+                    var point, j;
                     //draw polygon
+                    context.fillStyle = 'rgba(255, 0, 0, 0.25)';
                     context.beginPath();
-                    var point = cornerstone.pixelToCanvas(eventData.element, data.handles[(data.segmentation.polygon.length - 1)]);
+                    point = cornerstone.pixelToCanvas(eventData.element, data.handles[(data.segmentation.polygon.length - 1)]);
                     context.moveTo(point.x, point.y);
-                    for (var j = 0; j < data.segmentation.polygon.length; j++) {
+                    for (j = 0; j < data.segmentation.polygon.length; j++) {
                         point = cornerstone.pixelToCanvas(eventData.element, data.handles[j]);
-                        context.ellipse(point.x, point.y, 2, 2, 0, 0, 2 * Math.PI);
                         context.lineTo(point.x, point.y);
                     }
                     context.stroke();
+                    context.fill();
+                    //draw handles
+                    context.fillStyle = color;
+                    for (j = 0; j < data.segmentation.polygon.length; j++) {
+                        context.beginPath();
+                        point = cornerstone.pixelToCanvas(eventData.element, data.handles[j]);
+                        context.ellipse(point.x, point.y, 2, 2, 0, 0, 2 * Math.PI);
+                        context.fill();
+                    }
                 }
-                if (data.segmentation.mask && data.segmentation.maskOffset) {
+                if (drawMask && data.segmentation.mask && data.segmentation.maskOffset) {
                     //draw mask
                     var xOffset = data.segmentation.maskOffset[0];
                     var yOffset = data.segmentation.maskOffset[1];
 
                     context.save();
-                    context.fillStyle = '#FF0000';
+                    context.fillStyle = '#00FF00';
 
                     var row, column;
                     for (row = 0; row < data.segmentation.mask.length; row++) {
