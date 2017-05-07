@@ -20,7 +20,6 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
           data: measurementData.requestData
         }).done(function(data) {
             console.log('ajax get request returned');
-            console.log(data);
             measurementData.segmentation = JSON.parse(data);
         }).fail(function() {
             console.log('ajax get request failed');
@@ -67,6 +66,12 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 if (propagationDirection <= 0) {
                     createNewMeasurementInternal(element, xCenter, yCenter, z - 1, xOrig, yOrig, zOrig);
                 }
+
+                // var image = cornerstone.getEnabledElement(element).image;
+                // measurementData.segmentation.mask = segment(image, xOrig, yOrig, 0.1);
+                // measurementData.segmentation.maskOffset = [0, 0];
+                // polygon = getContourPolygon(measurementData.segmentation.mask);
+                // measurementData.segmentation.polygon = polygon;
 
                 for (var i = 0; i < polygon.length; i++) {
                     measurementData.handles[i] = {
@@ -183,10 +188,104 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 handles[i].y = polygon[i][1];
             }
         }
-
     }
 
+    //find point on edge of segment
+    function getEdgePoint(mask) {
+        for (i = 0; i < mask.length; i++) {
+            for (j = 0; j < mask[0].length; j++) {
+                if (mask[i][j]) {
+                    return [i, j];
+                }
+            }
+        }
+    }
 
+    //find boundary of segment
+    function getContourPolygon(mask) {
+        var i, j, start, polygon, directions, d, iDir, iDirLast, dir, vertexCount;
+        vertexCount = 0;
+        polygon = [];
+        directions = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]];
+        iDirLast = 0;
+        start = getEdgePoint(mask);
+        polygon.push(start);
+        i = start[0];
+        j = start[1];
+        //traverse edge of polygon
+        do {
+            //find next edge
+            for (d = 0; d < 8; d++) {
+                iDir = (d + iDirLast + 5) % 8;
+                dir = directions[iDir];
+                if (mask[i + dir[0]] && mask[i + dir[0]][j + dir[1]]) {
+                    i += dir[0];
+                    j += dir[1];
+                    polygon.push([i, j]);
+                    iDirLast = iDir;
+                    break;
+                }
+            }
+        } while ((i !== start[0] || j !== start[1]) && ++vertexCount < 10000)
+        return polygon;
+    }
+
+    //segment
+    function segment(image, x, y, threshold) {
+        var pixels, mask, tMin, tMax, i, j;
+        pixels = image.getPixelData();
+        tMin = pixels[y * image.columns + x] - threshold * image.maxPixelValue;
+        tMax = pixels[y * image.columns + x] + threshold * image.maxPixelValue;
+        console.log("threshold");
+        console.log(tMin);
+        console.log(tMax);
+        mask = []; //TODO convert to typed arrays?
+        for (i = 0; i < image.rows; i++) {
+            mask[i] = [];
+            for (j = 0; j < image.columns; j++) {
+                mask[i][j] = false;
+            }
+        }
+
+        var stack = [], current, i, j, pixel;
+        mask[y][x] = true;
+        stack.push([y, x]);
+        while (stack.length) {
+            current = stack.pop();
+            i = current[0];
+            j = current[1];
+            if (i < image.columns - 1 && !mask[i+1][j]) {
+                pixel = pixels[(i + 1) * image.columns + j];
+                if (pixel > tMin && pixel < tMax) {
+                    mask[i+1][j] = true;
+                    stack.push([i+1, j]);
+                }
+            }
+            if (i > 0 && !mask[i-1][j]) {
+                pixel = pixels[(i - 1) * image.columns + j];
+                if (pixel > tMin && pixel < tMax) {
+                    mask[i-1][j] = true;
+                    stack.push([i-1, j]);
+                }
+            }
+            if (j < image.rows - 1 && !mask[i][j+1]) {
+                pixel = pixels[i * image.columns + j + 1];
+                if (pixel > tMin && pixel < tMax) {
+                    mask[i][j+1] = true;
+                    stack.push([i, j+1]);
+                }
+            }
+            if (j > 0 && !mask[i][j-1]) {
+                pixel = pixels[i * image.columns + j - 1];
+                if (pixel > tMin && pixel < tMax) {
+                    mask[i][j-1] = true;
+                    stack.push([i, j-1]);
+                }
+            }
+        }
+
+        return mask;
+    }
 
     ///////// BEGIN ACTIVE TOOL ///////
     function addNewMeasurement(mouseEventData) {
@@ -209,9 +308,6 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             return;
         }
         var z = stackData.data[0].currentImageIdIndex;
-
-        console.log(cornerstone.getEnabledElement(mouseEventData.element).image);
-        console.log(cornerstone.getEnabledElement(mouseEventData.element).image.getPixelData());
 
         return createNewMeasurementInternal(mouseEventData.element, x, y, z, x, y, z);
     }
