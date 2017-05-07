@@ -198,6 +198,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
     }
 
     //find boundary of segment
+    //mask follows y,x (row,column) convention, polygon follows x,y convention
     function getContourPolygon(mask) {
         var i, j, start, polygon, directions, d, iDir, iDirLast, dir, vertexCount;
         vertexCount = 0;
@@ -205,9 +206,9 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         directions = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]];
         iDirLast = 0;
         start = getEdgePoint(mask);
-        polygon.push(start);
         i = start[0];
         j = start[1];
+        polygon.push([j, i]); //note: inverting y,x mask to x,y polygon
         //traverse edge of polygon
         do {
             //find next edge
@@ -217,7 +218,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 if (mask[i + dir[0]] && mask[i + dir[0]][j + dir[1]]) {
                     i += dir[0];
                     j += dir[1];
-                    polygon.push([i, j]);
+                    polygon.push([j, i]); //note: inverting y,x mask to x,y polygon
                     iDirLast = iDir;
                     break;
                 }
@@ -347,10 +348,6 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             context.fill();
 
             if (data.segmentation) {
-                //helper to convert coordinates from image to canvas
-                var pixelPairToCanvas = function(pair) {
-                    return cornerstone.pixelToCanvas(eventData.element, {x: pair[0], y: pair[1]});
-                }
                 if (data.segmentation.polygon) {
                     console.log('Drawing polygon');
                     //draw polygon
@@ -372,18 +369,17 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                     context.save();
                     context.fillStyle = '#FF0000';
 
-                    for (var xMask = 0; xMask < data.segmentation.mask.length; xMask++) {
-                        for (var yMask = 0; yMask < data.segmentation.mask[0].length; yMask++) {
-                            var point = pixelPairToCanvas([xMask + xOffset, yMask + yOffset]);
-                            if (data.segmentation.mask[xMask][yMask]) {
-                                //draw pixel
-                                context.fillRect(point.x, point.y, 1, 1);
+                    var row, column;
+                    for (row = 0; row < data.segmentation.mask.length; row++) {
+                        for (column = 0; column < data.segmentation.mask[0].length; column++) {
+                            var point = cornerstone.pixelToCanvas(eventData.element,
+                                {x: column + xOffset, y: row + yOffset});
+                            if (data.segmentation.mask[row][column]) {
+                                context.fillRect(point.x, point.y, 1, 1); //draw pixel
                             }
                         }
                     }
-
                     context.restore();
-
                 }
             } else if (!data.segmentationPending) {
                 //make rest call to get segmentation
