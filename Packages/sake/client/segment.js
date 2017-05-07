@@ -7,11 +7,15 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
     var toolType = 'sake';
     //select segmentation source
-    var getSegmentation = getSegmentationBackend;
-    //var getSegmentation = getSegmentationFrontend;
+    //var getSegmentation = getSegmentationBackend;
+    var getSegmentation = getSegmentationFrontend;
 
     //get segmentation from backend
     function getSegmentationBackend(element, measurementData) {
+        if (measurementData.segmentationPending) {
+            return; //REST request in progress
+        }
+
         //TODO remove hard coded url
         var url = 'http://104.198.43.42/sake/segment';
         measurementData.segmentationPending = true;
@@ -34,12 +38,20 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
     //compute segmentation on frontend
     function getSegmentationFrontend(element, measurementData) {
-        var image = cornerstone.getEnabledElement(element).image;
+        var image, segmentation, polygon;
+        image = cornerstone.getEnabledElement(element).image;
         measurementData.segmentationPending = true;
-        measurementData.segmentation = {};
-        measurementData.segmentation.mask = segment(image, measurementData.requestData.x, measurementData.requestData.y, 0.1);
-        measurementData.segmentation.maskOffset = [0, 0];
-        measurementData.segmentation.polygon = getContourPolygon(measurementData.segmentation.mask);
+        segmentation = segment(image, measurementData.requestData.x, measurementData.requestData.y, 0.1);
+        if (segmentation.area < 1000) {
+            polygon = getContourPolygon(segmentation.mask);
+            measurementData.segmentation = {
+                "mask": segmentation.mask,
+                "maskOffset": [0, 0],
+                "polygon": polygon
+            };
+        } else {
+            measurementData.segmentation = {};
+        }
         processSegmentation(element, measurementData);
     }
 
@@ -229,7 +241,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
     //segment
     function segment(image, x, y, threshold) {
-        var pixels, mask, tMin, tMax, i, j;
+        var pixels, mask, tMin, tMax, i, j, area;
         pixels = image.getPixelData();
         tMin = pixels[y * image.columns + x] - threshold * image.maxPixelValue;
         tMax = pixels[y * image.columns + x] + threshold * image.maxPixelValue;
@@ -247,6 +259,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         var stack = [], current, i, j, pixel;
         mask[y][x] = true;
         stack.push([y, x]);
+        area = 1;
         while (stack.length) {
             current = stack.pop();
             i = current[0];
@@ -256,6 +269,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 if (pixel > tMin && pixel < tMax) {
                     mask[i+1][j] = true;
                     stack.push([i+1, j]);
+                    area++;
                 }
             }
             if (i > 0 && !mask[i-1][j]) {
@@ -263,6 +277,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 if (pixel > tMin && pixel < tMax) {
                     mask[i-1][j] = true;
                     stack.push([i-1, j]);
+                    area++;
                 }
             }
             if (j < image.rows - 1 && !mask[i][j+1]) {
@@ -270,6 +285,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 if (pixel > tMin && pixel < tMax) {
                     mask[i][j+1] = true;
                     stack.push([i, j+1]);
+                    area++;
                 }
             }
             if (j > 0 && !mask[i][j-1]) {
@@ -277,11 +293,15 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 if (pixel > tMin && pixel < tMax) {
                     mask[i][j-1] = true;
                     stack.push([i, j-1]);
+                    area++;
                 }
             }
         }
 
-        return mask;
+        console.log("area");
+        console.log(area);
+
+        return {"mask": mask, "area": area};
     }
 
     ///////// BEGIN ACTIVE TOOL ///////
@@ -347,6 +367,11 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             context.ellipse(canvasPoint.x, canvasPoint.y, 2, 2, 0, 0, 2 * Math.PI)
             context.fill();
 
+            //get segmentation if necessary
+            if (!data.segmentation) {
+                getSegmentation(eventData.element, data);
+            }
+
             if (data.segmentation) {
                 if (data.segmentation.polygon) {
                     console.log('Drawing polygon');
@@ -381,9 +406,6 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                     }
                     context.restore();
                 }
-            } else if (!data.segmentationPending) {
-                //make rest call to get segmentation
-                getSegmentation(eventData.element, data);
             }
 
             context.restore();
