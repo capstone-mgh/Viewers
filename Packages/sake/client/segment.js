@@ -6,8 +6,12 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
     'use strict';
 
     var toolType = 'sake';
+    //select segmentation source
+    var getSegmentation = getSegmentationBackend;
+    //var getSegmentation = getSegmentationFrontend;
 
-    function getSegmentation(element, measurementData) {
+    //get segmentation from backend
+    function getSegmentationBackend(element, measurementData) {
         //TODO remove hard coded url
         var url = 'http://104.198.43.42/sake/segment';
         measurementData.segmentationPending = true;
@@ -21,70 +25,62 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         }).done(function(data) {
             console.log('ajax get request returned');
             measurementData.segmentation = JSON.parse(data);
+            processSegmentation(element, measurementData);
         }).fail(function() {
-            console.log('ajax get request failed');
-            console.log('drawing dummy data!');
-            var x = measurementData.requestData.x,
-                y = measurementData.requestData.y,
-                z = measurementData.requestData.z;
-            if (z % 7 === 3) {
-                measurementData.segmentation = {};
-            } else {
-                measurementData.segmentation = {
-                    mask: [
-                        [1, 0, 0 ,0 ,1],
-                        [0, 1, 0 ,1 ,0],
-                        [0, 0, 1 ,0 ,0],
-                        [0, 1, 0 ,1 ,0],
-                        [1, 0, 0 ,0 ,1],
-                    ],
-                    maskOffset: [x - 2, y - 2],
-                    polygon: [[x, y-7], [x+3, y-3], [x+4, y], [x+3, y+7], [x, y+7], [x-3, y+3], [x-4, y], [x-3, y-7]]
-                };
+            console.log('ajax get request failed, defaulting to front-end segmentation');
+            getSegmentationFrontend(element, measurementData);
+        });
+    }
+
+    //compute segmentation on frontend
+    function getSegmentationFrontend(element, measurementData) {
+        var image = cornerstone.getEnabledElement(element).image;
+        measurementData.segmentationPending = true;
+        measurementData.segmentation = {};
+        measurementData.segmentation.mask = segment(image, measurementData.requestData.x, measurementData.requestData.y, 0.1);
+        measurementData.segmentation.maskOffset = [0, 0];
+        measurementData.segmentation.polygon = getContourPolygon(measurementData.segmentation.mask);
+        processSegmentation(element, measurementData);
+    }
+
+    //process segmentation result
+    function processSegmentation(element, measurementData) {
+        var polygon = measurementData.segmentation.polygon;
+        if (polygon && polygon.length) {
+            var xCenter = 0,
+                yCenter = 0,
+                z = measurementData.requestData.z,
+                xOrig = measurementData.requestData.xOrig,
+                yOrig = measurementData.requestData.yOrig,
+                zOrig = measurementData.requestData.zOrig,
+                propagationDirection = Math.sign(z - zOrig);
+            //compute center
+            for (var i = 0; i < polygon.length; i++) {
+                xCenter += polygon[i][0];
+                yCenter += polygon[i][1];
             }
-        }).always(function() {
-            var polygon = measurementData.segmentation.polygon;
-            if (polygon && polygon.length) {
-                var xCenter = 0,
-                    yCenter = 0,
-                    z = measurementData.requestData.z,
-                    xOrig = measurementData.requestData.xOrig,
-                    yOrig = measurementData.requestData.yOrig,
-                    zOrig = measurementData.requestData.zOrig,
-                    propagationDirection = Math.sign(z - zOrig);
-                //compute center
-                for (var i = 0; i < polygon.length; i++) {
-                    xCenter += polygon[i][0];
-                    yCenter += polygon[i][1];
-                }
-                xCenter = Math.round(xCenter / polygon.length);
-                yCenter = Math.round(yCenter / polygon.length);
-                //propagate to next slice
-                if (propagationDirection >= 0) {
-                    createNewMeasurementInternal(element, xCenter, yCenter, z + 1, xOrig, yOrig, zOrig);
-                }
-                if (propagationDirection <= 0) {
-                    createNewMeasurementInternal(element, xCenter, yCenter, z - 1, xOrig, yOrig, zOrig);
-                }
-
-                // var image = cornerstone.getEnabledElement(element).image;
-                // measurementData.segmentation.mask = segment(image, xOrig, yOrig, 0.1);
-                // measurementData.segmentation.maskOffset = [0, 0];
-                // polygon = getContourPolygon(measurementData.segmentation.mask);
-                // measurementData.segmentation.polygon = polygon;
-
-                for (var i = 0; i < polygon.length; i++) {
-                    measurementData.handles[i] = {
-                        x: polygon[i][0],
-                        y: polygon[i][1],
-                        highlight: true,
-                        active: false
-                    }
+            xCenter = Math.round(xCenter / polygon.length);
+            yCenter = Math.round(yCenter / polygon.length);
+            //propagate to next slice
+            if (propagationDirection >= 0) {
+                createNewMeasurementInternal(element, xCenter, yCenter, z + 1, xOrig, yOrig, zOrig);
+            }
+            if (propagationDirection <= 0) {
+                createNewMeasurementInternal(element, xCenter, yCenter, z - 1, xOrig, yOrig, zOrig);
+            }
+            //create handles from polygons
+            for (var i = 0; i < polygon.length; i++) {
+                measurementData.handles[i] = {
+                    x: polygon[i][0],
+                    y: polygon[i][1],
+                    highlight: true,
+                    active: false
                 }
             }
+            //update image
             measurementData.segmentationPending = false;
             cornerstone.updateImage(element);
-        });
+        }
     }
 
     function createNewMeasurementInternal(element, x, y, z, xOrig, yOrig, zOrig) {
