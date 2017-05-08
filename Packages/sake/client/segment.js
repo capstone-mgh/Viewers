@@ -42,7 +42,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         var image, segmentation, polygon;
         image = cornerstone.getEnabledElement(element).image;
         measurementData.segmentationPending = true;
-        segmentation = segment(image, measurementData.requestData.x, measurementData.requestData.y, 0.1);
+        segmentation = segment(image, measurementData.requestData.x, measurementData.requestData.y, measurementData.requestData.threshold);
         if (segmentation.area < 1000) {
             polygon = getContourPolygon(segmentation.mask);
             measurementData.segmentation = {
@@ -110,12 +110,16 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             visible: false,
             active: true,
             handles: {
-                start: {
+                control: {
                     x: x,
                     y: y,
                     highlight: true,
                     active: false
                 }
+            },
+            controlPoint: {
+                x: x,
+                y: y
             },
             requestData: {
                 x: x,
@@ -124,6 +128,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 xOrig: xOrig,
                 yOrig: yOrig,
                 zOrig: zOrig,
+                threshold: 0.1,
                 patientName: imageMetadata.patient.name,
                 windowWidth: viewport.voi.windowWidth,
                 windowCenter: viewport.voi.windowCenter,
@@ -167,14 +172,42 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
     //callback for dragging a handle
     function dragCallback(e, eventData) {
-        if (eventData.toolType !== toolType) {
+        var i, dx, dy, polygon, controlPoint, handles, changedIndex;
+
+        if (eventData.toolType !== toolType || !eventData.measurementData.segmentation) {
             return;
         }
 
-        var i, dx, dy,
-            polygon = eventData.measurementData.segmentation.polygon,
-            handles = eventData.measurementData.handles,
-            changedIndex = -1;
+        handles = eventData.measurementData.handles;
+        controlPoint = eventData.measurementData.controlPoint;
+
+        //process control handle movement
+        if ((handles.control.x !== controlPoint.x) || (handles.control.y !== controlPoint.y)) {
+            dx = handles.control.x - controlPoint.x;
+            dy = handles.control.y - controlPoint.y;
+
+            if (Math.abs(dy) > Math.abs(dx)) { //vertical drag
+                if (dy > 0) {
+                    console.log("shrink");
+                    eventData.measurementData.requestData.threshold /= 1.1;
+                    eventData.measurementData.segmentation = false;
+                } else {
+                    console.log("grow");
+                    eventData.measurementData.requestData.threshold *= 1.1;
+                    eventData.measurementData.segmentation = false;
+                }
+            }
+
+            //console.log("delete");
+            //cornerstoneTools.removeToolState(eventData.element, toolType, eventData.measurementData);
+
+            handles.control.x = controlPoint.x;
+            handles.control.y = controlPoint.y;
+            return;
+        }
+
+        polygon = eventData.measurementData.segmentation.polygon;
+        changedIndex = -1;
         //find changed handle
         for (i = 0; i < polygon.length; i++) {
             if ((polygon[i][0] !== handles[i].x) || (polygon[i][1] != handles[i].y)) {
@@ -332,7 +365,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
     ///////// END ACTIVE TOOL ///////
 
     function pointNearTool(element, data, coords) {
-        var distanceToPoint = cornerstoneMath.point.distance(data.handles.start, coords);
+        var distanceToPoint = cornerstoneMath.point.distance(data.handles.control, coords);
         return (distanceToPoint < 25);
     }
 
@@ -359,16 +392,14 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
             var data = toolData.data[i];
             var color = cornerstoneTools.toolColors.getColorIfActive(data.active);
-            var canvasPoint = cornerstone.pixelToCanvas(eventData.element, data.handles.start);
+            var canvasPoint = cornerstone.pixelToCanvas(eventData.element, data.handles.control);
 
             context.strokeStyle = color;
             context.fillStyle = color;
 
             //draw selected point
             context.beginPath();
-            //(x, y, radiusX, radiusY, rotation, startAngle, endAngle, [anticlockwise]);
-            context.ellipse(canvasPoint.x, canvasPoint.y, 2, 2, 0, 0, 2 * Math.PI)
-            context.fill();
+            context.fillRect(canvasPoint.x - 3, canvasPoint.y - 3, 7, 7);
 
             //get segmentation if necessary
             if (!data.segmentation) {
