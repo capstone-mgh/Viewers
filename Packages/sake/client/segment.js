@@ -6,141 +6,57 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
     'use strict';
 
     var toolType = 'sake';
-    //select segmentation source
-    //var getSegmentation = getSegmentationBackend;
-    var getSegmentation = getSegmentationFrontend;
     var drawMask = false;
-
-    //get segmentation from backend
-    function getSegmentationBackend(element, measurementData) {
-        if (measurementData.segmentationPending) {
-            return; //REST request in progress
-        }
-
-        //TODO remove hard coded url
-        var url = 'http://104.198.43.42/sake/segment';
-        measurementData.segmentationPending = true;
-
-        console.log('GET request parameters');
-        console.log(measurementData.requestData);
-
-        $.ajax({
-          url: url,
-          data: measurementData.requestData
-        }).done(function(data) {
-            console.log('ajax get request returned');
-            measurementData.segmentation = JSON.parse(data);
-            processSegmentation(element, measurementData);
-        }).fail(function() {
-            console.log('ajax get request failed, defaulting to front-end segmentation');
-            getSegmentationFrontend(element, measurementData);
-        });
-    }
+    var maxArea = 1000;
 
     //compute segmentation on frontend
-    function getSegmentationFrontend(element, measurementData) {
-        var image, segmentation, polygon;
+    function getSegmentation(element, measurementData) {
+        var image, segmentationResult, polygon, z, propagationDirection;
+        z = getZ(element);
         image = cornerstone.getEnabledElement(element).image;
-        measurementData.segmentationPending = true;
-        segmentation = segment(image, measurementData.requestData.x, measurementData.requestData.y, measurementData.requestData.threshold);
-        if (segmentation.area < 1000) {
-            polygon = getContourPolygon(segmentation.mask);
-            measurementData.segmentation = {
-                "mask": segmentation.mask,
-                "maskOffset": [0, 0],
-                "polygon": polygon
-            };
-        } else {
-            measurementData.segmentation = {};
+        propagationDirection = Math.sign(z - measurementData.zOrig);
+
+        if (propagationDirection > 0) { //propagate down
+            console.log('propagate down');
+            measurementData.thresholds[z] = measurementData.thresholds[z] || measurementData.thresholds[z-1];
+            segmentationResult = binaryPropagationZ(image, measurementData.segmentation[z-1].mask,
+                measurementData.intensity, measurementData.thresholds[z]);
+            if (segmentationResult && segmentationResult.area <= maxArea) {
+                //continue propagation down
+                measurementData.zEnd = Math.min(z+1, measurementData.zMax);
+            } else {
+                //stop propagation
+                measurementData.zEnd = z-1;
+                return;
+            }
+        } else if (propagationDirection < 0) { //propagate up
+            console.log('propagate up')
+            measurementData.thresholds[z] = measurementData.thresholds[z] || measurementData.thresholds[z+1];
+            segmentationResult = binaryPropagationZ(image, measurementData.segmentation[z+1].mask,
+                measurementData.intensity, measurementData.thresholds[z]);
+            if (segmentationResult && segmentationResult.area <= maxArea) {
+                //continue propagation up
+                measurementData.zStart = Math.max(z-1, 0);
+            } else {
+                //stop propagation
+                measurementData.zStart = z+1;
+                return;
+            }
+        } else { //propagate from scratch
+            var x = measurementData.requestData.x;
+            var y = measurementData.requestData.y;
+            measurementData.thresholds[z] = 0.1; //set default
+            segmentationResult = binaryPropagation2D(image, [[y, x]],
+                measurementData.intensity, measurementData.thresholds[z]);
+            if (segmentationResult.area > maxArea) {
+                measurementData.zStart = z+1;
+                cornerstoneTools.removeToolState(element, toolType, measurementData);
+                return;
+            }
         }
-        processSegmentation(element, measurementData);
-    }
 
-    //process segmentation result
-    function processSegmentation(element, measurementData) {
-        var polygon = measurementData.segmentation.polygon;
-        if (polygon && polygon.length) {
-            var xCenter = 0,
-                yCenter = 0,
-                z = measurementData.requestData.z,
-                xOrig = measurementData.requestData.xOrig,
-                yOrig = measurementData.requestData.yOrig,
-                zOrig = measurementData.requestData.zOrig,
-                propagationDirection = Math.sign(z - zOrig);
-            //compute center
-            for (var i = 0; i < polygon.length; i++) {
-                xCenter += polygon[i][0];
-                yCenter += polygon[i][1];
-            }
-            xCenter = Math.round(xCenter / polygon.length);
-            yCenter = Math.round(yCenter / polygon.length);
-            //propagate to next slice
-            if (propagationDirection >= 0) {
-                createNewMeasurementInternal(element, xCenter, yCenter, z + 1, xOrig, yOrig, zOrig);
-            }
-            if (propagationDirection <= 0) {
-                createNewMeasurementInternal(element, xCenter, yCenter, z - 1, xOrig, yOrig, zOrig);
-            }
-            //create handles from polygons
-            for (var i = 0; i < polygon.length; i++) {
-                measurementData.handles[i] = {
-                    x: polygon[i][0],
-                    y: polygon[i][1],
-                    highlight: true,
-                    active: false
-                }
-            }
-            //update image
-            measurementData.segmentationPending = false;
-            cornerstone.updateImage(element);
-        }
-    }
-
-    function createNewMeasurementInternal(element, x, y, z, xOrig, yOrig, zOrig) {
-        var imageIds = cornerstoneTools.getToolState(element, 'stack').data[0].imageIds;
-        if (z < 0 || z >= imageIds.length) {
-            return; //out of stack range
-        }
-        var currentImageId = imageIds[z];
-        //TODO handle missing metadata?
-        var imageMetadata = OHIF.viewer.metadataProvider.getMetadata(currentImageId);
-        var viewport = cornerstone.getViewport(element);
-
-        var measurementData = {
-            visible: false,
-            active: true,
-            handles: {
-                control: {
-                    x: x,
-                    y: y,
-                    highlight: true,
-                    active: false
-                }
-            },
-            controlPoint: {
-                x: x,
-                y: y
-            },
-            requestData: {
-                x: x,
-                y: y,
-                z: z,
-                xOrig: xOrig,
-                yOrig: yOrig,
-                zOrig: zOrig,
-                threshold: 0.1,
-                patientName: imageMetadata.patient.name,
-                windowWidth: viewport.voi.windowWidth,
-                windowCenter: viewport.voi.windowCenter,
-                seriesInstanceUid: imageMetadata.series.seriesInstanceUid,
-                sopInstanceUid: imageMetadata.instance.sopInstanceUid
-            }
-        };
-
-        // associate this data with this imageId so we can render it and manipulate it
-        cornerstoneTools.addToolState(element, toolType, measurementData, currentImageId);
-        $(element).on('CornerstoneToolsMeasurementModified', dragCallback);
-        return measurementData;
+        measurementData.segmentation[z] = segmentationResult;
+        syncPolygonToHandles(measurementData, z);
     }
 
     //distance squared of 2 points as [x, y] arrays
@@ -172,41 +88,41 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
     //callback for dragging a handle
     function dragCallback(e, eventData) {
-        var i, dx, dy, polygon, controlPoint, handles, changedIndex;
+        var i, z, dx, dy, polygon, controlPoint, handles, changedIndex, segmentation;
+        z = getZ(eventData.element);
+        segmentation = eventData.measurementData.segmentation;
 
-        if (eventData.toolType !== toolType || !eventData.measurementData.segmentation) {
+        if (eventData.toolType !== toolType || !segmentation[z]) {
             return;
         }
 
         handles = eventData.measurementData.handles;
-        controlPoint = eventData.measurementData.controlPoint;
+        controlPoint = eventData.measurementData.segmentation[z].center;
 
         //process control handle movement
-        if ((handles.control.x !== controlPoint.x) || (handles.control.y !== controlPoint.y)) {
-            dx = handles.control.x - controlPoint.x;
-            dy = handles.control.y - controlPoint.y;
-
+        dx = handles.control.x - controlPoint[0];
+        dy = handles.control.y - controlPoint[1];
+        if (dx || dy) {
             if (Math.abs(dy) > Math.abs(dx)) { //vertical drag
                 if (dy > 0) {
                     console.log("shrink");
-                    eventData.measurementData.requestData.threshold /= 1.1;
-                    eventData.measurementData.segmentation = false;
+                    eventData.measurementData.thresholds[z] /= 1.1;
+                    segmentation[z] = false;
+                    eventData.measurementData.zHandles = false; //invalidate handles
                 } else {
                     console.log("grow");
-                    eventData.measurementData.requestData.threshold *= 1.1;
-                    eventData.measurementData.segmentation = false;
+                    eventData.measurementData.thresholds[z] *= 1.1;
+                    segmentation[z] = false;
+                    eventData.measurementData.zHandles = false; //invalidate handles
                 }
             }
 
             //console.log("delete");
             //cornerstoneTools.removeToolState(eventData.element, toolType, eventData.measurementData);
-
-            handles.control.x = controlPoint.x;
-            handles.control.y = controlPoint.y;
             return;
         }
 
-        polygon = eventData.measurementData.segmentation.polygon;
+        polygon = segmentation[z].polygon;
         changedIndex = -1;
         //find changed handle
         for (i = 0; i < polygon.length; i++) {
@@ -224,11 +140,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             propagateDrag(polygon, i, dx, dy, 1);
             propagateDrag(polygon, i, dx, dy, -1);
 
-            //copy polygon back to handles
-            for (var i = 0; i < polygon.length; i++) {
-                handles[i].x = polygon[i][0];
-                handles[i].y = polygon[i][1];
-            }
+            syncPolygonToHandles(eventData.measurementData, z);
         }
     }
 
@@ -273,16 +185,34 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         return polygon;
     }
 
+    //get center of polygon
+    function getPolygonCenter(polygon) {
+        var i, xCenter, yCenter;
+        xCenter = 0;
+        yCenter = 0;
+        for (i = 0; i < polygon.length; i++) {
+            xCenter += polygon[i][0];
+            yCenter += polygon[i][1];
+        }
+        xCenter = Math.round(xCenter / polygon.length);
+        yCenter = Math.round(yCenter / polygon.length);
+        return [xCenter, yCenter];
+    }
+
     //segment
-    function segment(image, x, y, threshold) {
-        var pixels, mask, tMin, tMax, i, j, area;
+    function binaryPropagation2D(image, stack, intensity, threshold) {
+        var pixels, mask, i, j, area, current, pixel, tMin, tMax, polygon, center;
         pixels = image.getPixelData();
-        tMin = pixels[y * image.columns + x] - threshold * image.maxPixelValue;
-        tMax = pixels[y * image.columns + x] + threshold * image.maxPixelValue;
-        console.log("threshold");
-        console.log(tMin);
-        console.log(tMax);
-        mask = []; //TODO convert to typed arrays?
+        tMin = intensity - threshold * image.maxPixelValue;
+        tMax = intensity + threshold * image.maxPixelValue;
+
+        //reached end of propagation
+        if (!stack.length) {
+            return false;
+        }
+
+        //initialize mask array TODO convert to typed arrays?
+        mask = [];
         for (i = 0; i < image.rows; i++) {
             mask[i] = [];
             for (j = 0; j < image.columns; j++) {
@@ -290,10 +220,16 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             }
         }
 
-        var stack = [], current, i, j, pixel;
-        mask[y][x] = true;
-        stack.push([y, x]);
-        area = 1;
+        //initialize area
+        area = stack.length;
+
+        //add initial stack points to mask
+        for (i = 0; i < stack.length; i++) {
+            current = stack[i];
+            mask[current[0]][current[1]] = true;
+        }
+
+        //flood-fill propagate
         while (stack.length) {
             current = stack.pop();
             i = current[0];
@@ -331,11 +267,37 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 }
             }
         }
+        polygon = getContourPolygon(mask);
+        center = getPolygonCenter(polygon);
+        return {mask: mask, area: area, polygon: polygon, center: center};
+    }
 
-        console.log("area");
-        console.log(area);
+    function binaryPropagationZ(image, templateMask, intensity, threshold) {
+        var i, j, stack, pixels, pixel, tMin, tMax;
+        pixels = image.getPixelData();
+        tMin = intensity - threshold * image.maxPixelValue;
+        tMax = intensity + threshold * image.maxPixelValue;
+        stack = [];
+        for (i = 0; i < image.rows; i++) {
+            for (j = 0; j < image.columns; j++) {
+                if (templateMask[i][j]) {
+                    pixel = pixels[i * image.columns + j];
+                    if (pixel > tMin && pixel < tMax) {
+                        stack.push([i, j]);
+                    }
+                }
+            }
+        }
+        return binaryPropagation2D(image, stack, intensity, threshold);
+    }
 
-        return {"mask": mask, "area": area};
+    function getZ(element) {
+        var stackData = cornerstoneTools.getToolState(element, 'stack');
+        if (!stackData || !stackData.data || !stackData.data.length) {
+            console.log('no stack data available');
+            return;
+        }
+        return stackData.data[0].currentImageIdIndex;
     }
 
     ///////// BEGIN ACTIVE TOOL ///////
@@ -349,24 +311,92 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
     }
 
     function createNewMeasurement(mouseEventData) {
-        //create the measurement data for this tool with the end handle activated
+        //create the measurement data for this tool
+        var element = mouseEventData.element;
         var x = Math.round(mouseEventData.currentPoints.image.x);
         var y = Math.round(mouseEventData.currentPoints.image.y);
+        var z = getZ(element);
 
-        var stackData = cornerstoneTools.getToolState(mouseEventData.element, 'stack');
-        if (!stackData || !stackData.data || !stackData.data.length) {
-            console.log('no stack data available');
-            return;
+        var imageIds = cornerstoneTools.getToolState(element, 'stack').data[0].imageIds;
+        if (z < 0 || z >= imageIds.length) {
+            return; //out of stack range
         }
-        var z = stackData.data[0].currentImageIdIndex;
+        var currentImageId = imageIds[z];
+        //TODO handle missing metadata?
+        var imageMetadata = OHIF.viewer.metadataProvider.getMetadata(currentImageId);
+        var viewport = cornerstone.getViewport(element);
 
-        return createNewMeasurementInternal(mouseEventData.element, x, y, z, x, y, z);
+        //var toolStateManager = cornerstoneTools.getElementToolStateManager(element);
+
+        //extract intensity of selected pixel
+        var image = cornerstone.getEnabledElement(element).image;
+        var intensity = image.getPixelData()[y * image.columns + x];
+
+        var measurementData = {
+            zStart: Math.max(0, z-1),
+            zEnd: Math.min(z+1, imageIds.length - 1),
+            zOrig: z,
+            zMax: imageIds.length - 1,
+            intensity: intensity,
+            visible: false,
+            active: true,
+            handles: {
+                control: {
+                    x: x,
+                    y: y,
+                    highlight: true,
+                    active: false
+                }
+            },
+            requestData: {
+                x: x,
+                y: y,
+                z: z,
+                patientName: imageMetadata.patient.name,
+                windowWidth: viewport.voi.windowWidth,
+                windowCenter: viewport.voi.windowCenter,
+                seriesInstanceUid: imageMetadata.series.seriesInstanceUid,
+                sopInstanceUid: imageMetadata.instance.sopInstanceUid
+            },
+            thresholds: {},
+            segmentation: {}
+        };
+
+        // associate data to toolstate
+        cornerstoneTools.addToolState(element, toolType, measurementData);
+        $(element).on('CornerstoneToolsMeasurementModified', dragCallback);
+        return measurementData;
     }
     ///////// END ACTIVE TOOL ///////
 
     function pointNearTool(element, data, coords) {
+        //TODO fix to detect inside polygon
         var distanceToPoint = cornerstoneMath.point.distance(data.handles.control, coords);
         return (distanceToPoint < 25);
+    }
+
+    //copies a given polygon to handles
+    function syncPolygonToHandles(data, z) {
+        var i, center, polygon;
+        if (z === data.zHandles) {
+            return; //handles correct
+        }
+        polygon = data.segmentation[z].polygon;
+        center = data.segmentation[z].center;
+        //add vertex handles
+        for (var i = 0; i < polygon.length; i++) {
+            //create handle if necessary
+            if (!data.handles[i]) {
+                data.handles[i] = {highlight: true, active: false};
+            }
+            data.handles[i].x = polygon[i][0];
+            data.handles[i].y = polygon[i][1];
+        }
+        //add control handle
+        data.handles.control.x = center[0];
+        data.handles.control.y = center[1];
+        //set handles z on data
+        data.zHandles = z;
     }
 
     ///////// BEGIN IMAGE RENDERING ///////
@@ -383,14 +413,17 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         var canvasWidth = canvas.width;
         var canvasHeight = canvas.height;
         var context = canvas.getContext('2d');
+        var z = getZ(eventData.element);
 
-        //var context = eventData.canvasContext.canvas.getContext('2d');
         context.setTransform(1, 0, 0, 1, 0, 0);
 
         for (var i = 0; i < toolData.data.length; i++) {
-            context.save();
-
             var data = toolData.data[i];
+            if (z < data.zStart || data.zEnd < z) {
+                continue; //segment not on current slice
+            }
+
+            context.save();
             var color = cornerstoneTools.toolColors.getColorIfActive(data.active);
             var canvasPoint = cornerstone.pixelToCanvas(eventData.element, data.handles.control);
 
@@ -402,55 +435,61 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             context.fillRect(canvasPoint.x - 3, canvasPoint.y - 3, 7, 7);
 
             //get segmentation if necessary
-            if (!data.segmentation) {
+            if (!data.segmentation[z]) {
                 getSegmentation(eventData.element, data);
+                //check segmentation exists again
+                if (z < data.zStart || data.zEnd < z) {
+                    continue; //segment not on current slice
+                }
             }
 
-            if (data.segmentation) {
-                if (data.segmentation.polygon) {
-                    console.log('Drawing polygon');
-                    var point, j;
-                    //draw polygon
-                    context.fillStyle = 'rgba(255, 0, 0, 0.25)';
-                    context.beginPath();
-                    point = cornerstone.pixelToCanvas(eventData.element, data.handles[(data.segmentation.polygon.length - 1)]);
-                    context.moveTo(point.x, point.y);
-                    for (j = 0; j < data.segmentation.polygon.length; j++) {
-                        point = cornerstone.pixelToCanvas(eventData.element, data.handles[j]);
-                        context.lineTo(point.x, point.y);
-                    }
-                    context.stroke();
-                    context.fill();
-                    //draw handles
-                    context.fillStyle = color;
-                    for (j = 0; j < data.segmentation.polygon.length; j++) {
-                        context.beginPath();
-                        point = cornerstone.pixelToCanvas(eventData.element, data.handles[j]);
-                        context.ellipse(point.x, point.y, 2, 2, 0, 0, 2 * Math.PI);
-                        context.fill();
-                    }
+            var polygon = data.segmentation[z].polygon;
+
+            if (polygon) {
+                //create handles
+                //TODO cache?
+                syncPolygonToHandles(data, z);
+
+                console.log('Drawing polygon');
+                var point, j;
+                //draw polygon
+                context.fillStyle = 'rgba(255, 0, 0, 0.25)';
+                context.beginPath();
+                point = cornerstone.pixelToCanvas(eventData.element, data.handles[(polygon.length - 1)]);
+                context.moveTo(point.x, point.y);
+                for (j = 0; j < polygon.length; j++) {
+                    point = cornerstone.pixelToCanvas(eventData.element, data.handles[j]);
+                    context.lineTo(point.x, point.y);
                 }
-                if (drawMask && data.segmentation.mask && data.segmentation.maskOffset) {
-                    //draw mask
-                    var xOffset = data.segmentation.maskOffset[0];
-                    var yOffset = data.segmentation.maskOffset[1];
+                context.stroke();
+                context.fill();
+                //draw handles
+                context.fillStyle = color;
+                for (j = 0; j < polygon.length; j++) {
+                    context.beginPath();
+                    point = cornerstone.pixelToCanvas(eventData.element, data.handles[j]);
+                    context.ellipse(point.x, point.y, 2, 2, 0, 0, 2 * Math.PI);
+                    context.fill();
+                }
+            }
 
-                    context.save();
-                    context.fillStyle = '#00FF00';
-
-                    var row, column;
-                    for (row = 0; row < data.segmentation.mask.length; row++) {
-                        for (column = 0; column < data.segmentation.mask[0].length; column++) {
-                            var point = cornerstone.pixelToCanvas(eventData.element,
-                                {x: column + xOffset, y: row + yOffset});
-                            if (data.segmentation.mask[row][column]) {
-                                context.fillRect(point.x, point.y, 1, 1); //draw pixel
-                            }
+            var row, column, point, mask;
+            mask = data.segmentation[z].mask;
+            if (drawMask && mask) {
+                //draw mask
+                context.save();
+                context.fillStyle = '#00FF00';
+                for (row = 0; row < mask.length; row++) {
+                    for (column = 0; column < mask[0].length; column++) {
+                        point = cornerstone.pixelToCanvas(eventData.element, {x: column, y: row});
+                        if (mask[row][column]) {
+                            context.fillRect(point.x, point.y, 1, 1); //draw pixel
                         }
                     }
-                    context.restore();
                 }
+                context.restore();
             }
+
 
             context.restore();
         }
