@@ -117,10 +117,6 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             cornerstone.updateImage(element);
         }).fail(function() {
             console.log('prediction request failed');
-            // measurementData.segmentation.information = {
-            //     malignancy: 1/3,
-            //     percentile: 2/3
-            // };
         });
     }
 
@@ -377,9 +373,30 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
     }
 
     function saveCallback(element) {
+        console.log('Save');
         var toolData = cornerstoneTools.getToolState(element, toolType);
-        console.log('Save3');
-        console.log(toolData);
+        if (!toolData.data || !toolData.data.length) {
+            return;
+        }
+        var nodules = [];
+        for (var i = 0; i < toolData.data.length; i++) {
+            nodules.push(serializePolygons(toolData.data[i]));
+        }
+        var requestData = $.extend({}, toolData.data[0].requestData, {nodules: nodules});
+        console.log(requestData);
+
+        //TODO remove hard coded url
+        var url = 'http://104.198.43.42/sake/save';
+        $.ajax({
+          url: url,
+          data: requestData,
+          method: 'POST'
+        }).done(function(data) {
+            console.log('saving nodules');
+            console.log(JSON.parse(data));
+        }).fail(function() {
+            console.log('saving failed');
+        });
     }
 
     ///////// BEGIN ACTIVE TOOL ///////
