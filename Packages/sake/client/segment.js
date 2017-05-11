@@ -3,9 +3,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
 //TODO List
 //half-pixel offset bug
-//cap thresholding
 //save
-//analyze
 
 (function($, cornerstone, cornerstoneMath, cornerstoneTools) {
 
@@ -30,33 +28,48 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             if (segmentationResult && segmentationResult.area <= maxArea) {
                 //continue propagation down
                 measurementData.zEnd = Math.min(z+1, measurementData.zMax);
+            } else if (measurementData.segmentation[z]) {
+                //worked for smaller threshold, limit threshold
+                measurementData.thresholds[z] /= 1.1;
+                return;
             } else {
                 //stop propagation
                 measurementData.zEnd = z-1;
                 return;
             }
         } else if (propagationDirection < 0) { //propagate up
-            console.log('propagate up')
+            console.log('propagate up');
             measurementData.thresholds[z] = measurementData.thresholds[z] || measurementData.thresholds[z+1];
             segmentationResult = binaryPropagationZ(image, measurementData.segmentation[z+1].mask,
                 measurementData.intensity, measurementData.thresholds[z]);
             if (segmentationResult && segmentationResult.area <= maxArea) {
                 //continue propagation up
                 measurementData.zStart = Math.max(z-1, 0);
+            } else if (measurementData.segmentation[z]) {
+                //worked for smaller threshold, limit threshold
+                measurementData.thresholds[z] /= 1.1;
+                return;
             } else {
                 //stop propagation
                 measurementData.zStart = z+1;
                 return;
             }
         } else { //propagate from scratch
+            console.log('propagate scratch');
             var x = measurementData.requestData.x;
             var y = measurementData.requestData.y;
-            measurementData.thresholds[z] = 0.1; //set default
+            measurementData.thresholds[z] = measurementData.thresholds[z] || 0.1; //default
             segmentationResult = binaryPropagation2D(image, [[y, x]],
                 measurementData.intensity, measurementData.thresholds[z]);
             if (segmentationResult.area > maxArea) {
-                measurementData.zStart = z+1;
-                cornerstoneTools.removeToolState(element, toolType, measurementData);
+                if (measurementData.segmentation[z]) {
+                    //worked for smaller threshold, limit threshold
+                    measurementData.thresholds[z] /= 1.1;
+                } else {
+                    //invalid region
+                    measurementData.zStart = z+1;
+                    cornerstoneTools.removeToolState(element, toolType, measurementData);
+                }
                 return;
             }
         }
@@ -70,7 +83,6 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
     function analyzeSegment(element, measurementData) {
         if (measurementData.analyzeDelayTimer) {
             clearTimeout(measurementData.analyzeDelayTimer);
-            console.log("clear timer");
         }
         measurementData.analyzeDelayTimer = setTimeout(sendAnalyzeRequest, 1000, element, measurementData);
     }
@@ -160,12 +172,12 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 if (dy > 0) {
                     console.log("shrink");
                     eventData.measurementData.thresholds[z] /= 1.1;
-                    segmentation[z] = false;
+                    eventData.measurementData.segmentationStale[z] = true;
                     eventData.measurementData.zHandles = false; //invalidate handles
                 } else {
                     console.log("grow");
                     eventData.measurementData.thresholds[z] *= 1.1;
-                    segmentation[z] = false;
+                    eventData.measurementData.segmentationStale[z] = true;
                     eventData.measurementData.zHandles = false; //invalidate handles
                 }
             }
@@ -192,8 +204,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             polygon[i][1] = handles[i].y;
             propagateDrag(polygon, i, dx, dy, 1);
             propagateDrag(polygon, i, dx, dy, -1);
-
-            syncPolygonToHandles(eventData.measurementData, z);
+            eventData.measurementData.zHandles = false; //invalidate handles
         }
     }
 
@@ -250,6 +261,18 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         xCenter = Math.round(xCenter / polygon.length);
         yCenter = Math.round(yCenter / polygon.length);
         return [xCenter, yCenter];
+    }
+
+    //get top right corner of polygon
+    function getPolygonTopRightCorner(polygon) {
+        var i, x, y;
+        x = 0;
+        y = Infinity;
+        for (i = 0; i < polygon.length; i++) {
+            x = Math.max(x, polygon[i][0]);
+            y = Math.min(y, polygon[i][1]);
+        }
+        return [x, y];
     }
 
     //segment
@@ -415,7 +438,8 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 sopInstanceUid: imageMetadata.instance.sopInstanceUid
             },
             thresholds: {},
-            segmentation: {}
+            segmentation: {},
+            segmentationStale: {}
         };
 
         // associate data to toolstate
@@ -497,8 +521,9 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             context.fillRect(canvasPoint.x - 3, canvasPoint.y - 3, 7, 7);
 
             //get segmentation if necessary
-            if (!data.segmentation[z]) {
+            if (!data.segmentation[z] || data.segmentationStale[z]) {
                 getSegmentation(eventData.element, data);
+                data.segmentationStale[z] = false;
                 //check segmentation exists again
                 if (z < data.zStart || data.zEnd < z) {
                     continue; //segment not on current slice
@@ -509,7 +534,6 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
             if (polygon) {
                 //create handles
-                //TODO cache?
                 syncPolygonToHandles(data, z);
 
                 console.log('Drawing polygon');
@@ -537,8 +561,10 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
             var information = data.segmentation.information;
             if (information) {
-                context.fillText('Mal: ' + information.malignancy.toFixed(2), 20, 60);
-                context.fillText('Size: ' + information.percentile.toFixed(2), 20, 75);
+                var corner = getPolygonTopRightCorner(polygon);
+                corner = cornerstone.pixelToCanvas(eventData.element, {x: corner[0], y: corner[1]});
+                context.fillText('Mal: ' + information.malignancy.toFixed(2), corner.x + 3, corner.y);
+                context.fillText('Size: ' + information.percentile.toFixed(2), corner.x + 3, corner.y + 16);
             }
 
             var row, column, point, mask;
