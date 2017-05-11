@@ -468,7 +468,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         polygon = data.segmentation[z].polygon;
         center = data.segmentation[z].center;
         //add vertex handles
-        for (var i = 0; i < polygon.length; i++) {
+        for (i = 0; i < polygon.length; i++) {
             //create handle if necessary
             if (!data.handles[i]) {
                 data.handles[i] = {highlight: true, active: false};
@@ -503,6 +503,12 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
         context.setTransform(1, 0, 0, 1, 0, 0);
 
+        //compute marker size TODO look into way of getting the scale directly
+        var p0 = cornerstone.pixelToCanvas(eventData.element, {x: 0, y: 0});
+        var p1 = cornerstone.pixelToCanvas(eventData.element, {x: 1, y: 1});
+        var markerSize = Math.max(2, 0.2 * cornerstoneMath.point.distance(p0, p1));
+        context.lineWidth = 0.5 * markerSize;
+
         for (var i = 0; i < toolData.data.length; i++) {
             var data = toolData.data[i];
             if (z < data.zStart || data.zEnd < z) {
@@ -511,14 +517,14 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
             context.save();
             var color = cornerstoneTools.toolColors.getColorIfActive(data.active);
-            var canvasPoint = cornerstone.pixelToCanvas(eventData.element, data.handles.control);
+            var point = cornerstone.pixelToCanvas(eventData.element, data.handles.control);
 
             context.strokeStyle = color;
             context.fillStyle = color;
 
             //draw selected point
             context.beginPath();
-            context.fillRect(canvasPoint.x - 3, canvasPoint.y - 3, 7, 7);
+            context.fillRect(point.x - markerSize, point.y - markerSize, 2 * markerSize + 1, 2 * markerSize + 1);
 
             //get segmentation if necessary
             if (!data.segmentation[z] || data.segmentationStale[z]) {
@@ -537,7 +543,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 syncPolygonToHandles(data, z);
 
                 console.log('Drawing polygon');
-                var point, j;
+                var j;
                 //draw polygon
                 context.fillStyle = 'rgba(255, 0, 0, 0.25)';
                 context.beginPath();
@@ -554,7 +560,7 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                 for (j = 0; j < polygon.length; j++) {
                     context.beginPath();
                     point = cornerstone.pixelToCanvas(eventData.element, data.handles[j]);
-                    context.ellipse(point.x, point.y, 2, 2, 0, 0, 2 * Math.PI);
+                    context.ellipse(point.x, point.y, markerSize, markerSize, 0, 0, 2 * Math.PI);
                     context.fill();
                 }
             }
@@ -563,8 +569,8 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
             if (information) {
                 var corner = getPolygonTopRightCorner(polygon);
                 corner = cornerstone.pixelToCanvas(eventData.element, {x: corner[0], y: corner[1]});
-                context.fillText('Mal: ' + information.malignancy.toFixed(2), corner.x + 3, corner.y);
-                context.fillText('Size: ' + information.percentile.toFixed(2), corner.x + 3, corner.y + 16);
+                context.fillText('Mal: ' + information.malignancy.toFixed(2), corner.x + 3 * markerSize, corner.y);
+                context.fillText('Size: ' + information.percentile.toFixed(2), corner.x + 3 * markerSize, corner.y + 16);
             }
 
             var row, column, point, mask;
