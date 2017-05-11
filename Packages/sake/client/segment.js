@@ -1,6 +1,12 @@
 import { OHIF } from 'meteor/ohif:core';
 import { Viewerbase } from 'meteor/ohif:viewerbase';
 
+//TODO List
+//half-pixel offset bug
+//cap thresholding
+//save
+//analyze
+
 (function($, cornerstone, cornerstoneMath, cornerstoneTools) {
 
     'use strict';
@@ -57,6 +63,53 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
 
         measurementData.segmentation[z] = segmentationResult;
         syncPolygonToHandles(measurementData, z);
+        analyzeSegment(element, measurementData);
+    }
+
+    //send request after a delay
+    function analyzeSegment(element, measurementData) {
+        if (measurementData.analyzeDelayTimer) {
+            clearTimeout(measurementData.analyzeDelayTimer);
+            console.log("clear timer");
+        }
+        measurementData.analyzeDelayTimer = setTimeout(sendAnalyzeRequest, 1000, element, measurementData);
+    }
+
+    //serialize polygons off of measurementData
+    function serializePolygons(measurementData) {
+        var z, zOffset, polygons = [];
+        for (z = measurementData.zStart; z <= measurementData.zEnd; z++) {
+            if (measurementData.segmentation[z]) {
+                polygons.push(measurementData.segmentation[z].polygon);
+                zOffset = zOffset || z;
+            }
+        }
+        return {polygons: polygons, zOffset: zOffset};
+    }
+
+    //send a request to the ML server
+    function sendAnalyzeRequest(element, measurementData) {
+        var requestData = $.extend({}, measurementData.requestData, serializePolygons(measurementData));
+        console.log(requestData);
+
+        //TODO remove hard coded url
+        var url = 'http://104.198.43.42/sake/analyze';
+        $.ajax({
+          url: url,
+          data: requestData,
+          method: 'POST'
+        }).done(function(data) {
+            console.log('getting prediction information');
+            measurementData.segmentation.information = JSON.parse(data);
+            console.log(measurementData.segmentation.information);
+            cornerstone.updateImage(element);
+        }).fail(function() {
+            console.log('prediction request failed');
+            // measurementData.segmentation.information = {
+            //     malignancy: 1/3,
+            //     percentile: 2/3
+            // };
+        });
     }
 
     //distance squared of 2 points as [x, y] arrays
@@ -324,9 +377,6 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         var z = getZ(element);
 
         var imageIds = cornerstoneTools.getToolState(element, 'stack').data[0].imageIds;
-        if (z < 0 || z >= imageIds.length) {
-            return; //out of stack range
-        }
         var currentImageId = imageIds[z];
         //TODO handle missing metadata?
         var imageMetadata = OHIF.viewer.metadataProvider.getMetadata(currentImageId);
@@ -423,6 +473,8 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         var canvasWidth = canvas.width;
         var canvasHeight = canvas.height;
         var context = canvas.getContext('2d');
+        context.font = '14px Arial';
+
         var z = getZ(eventData.element);
 
         context.setTransform(1, 0, 0, 1, 0, 0);
@@ -481,6 +533,12 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
                     context.ellipse(point.x, point.y, 2, 2, 0, 0, 2 * Math.PI);
                     context.fill();
                 }
+            }
+
+            var information = data.segmentation.information;
+            if (information) {
+                context.fillText('Mal: ' + information.malignancy.toFixed(2), 20, 60);
+                context.fillText('Size: ' + information.percentile.toFixed(2), 20, 75);
             }
 
             var row, column, point, mask;
