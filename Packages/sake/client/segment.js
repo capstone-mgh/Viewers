@@ -300,6 +300,12 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         return stackData.data[0].currentImageIdIndex;
     }
 
+    function saveCallback(element) {
+        var toolData = cornerstoneTools.getToolState(element, toolType);
+        console.log('Save3');
+        console.log(toolData);
+    }
+
     ///////// BEGIN ACTIVE TOOL ///////
     function addNewMeasurement(mouseEventData) {
         var measurementData = createNewMeasurement(mouseEventData);
@@ -365,6 +371,10 @@ import { Viewerbase } from 'meteor/ohif:viewerbase';
         // associate data to toolstate
         cornerstoneTools.addToolState(element, toolType, measurementData);
         $(element).on('CornerstoneToolsMeasurementModified', dragCallback);
+
+        // bind save button
+        OHIF.viewer.functionList.sakeSave = saveCallback;
+
         return measurementData;
     }
     ///////// END ACTIVE TOOL ///////

@@ -139,6 +139,13 @@ Template.toolbarSection.helpers({
         });
 
         buttonData.push({
+            id: 'sakeSave',
+            title: 'Save',
+            classes: 'imageViewerCommand',
+            svgLink: 'packages/sake/assets/sakelogo.svg#icon-tools-segment'
+        });
+
+        buttonData.push({
             id: 'resetViewport',
             title: 'Reset',
             classes: 'imageViewerCommand',
